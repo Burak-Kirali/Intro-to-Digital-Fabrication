@@ -14,15 +14,28 @@
 			 font-size: 50px;
 		}
 
-		h2
+		h3
 		{
 			text-align: center;
 			font-size: 35px;
 		}
+		
 		pre
 		{
 			text-align: center;
 			font-size: 20px;
+		}
+		figure {
+		text-align: center;
+		font-size: 20px;
+	
+		}
+
+		img
+		{
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
 		}
 		
 	</style>
@@ -38,50 +51,66 @@
   </div>
 </nav>
 
-<body>
-	 <!--Each column is for one project idea and rows for various aspects for it-->
+<body style="background-color: dodgerblue;">
+	<h1> Fix, Steady Go Pro for Diver</h1>
 
-	 <div class="container-fluid bg-primary text-center">
+	<h3><FONT COLOR=red><b>The problem: </b><FONT COLOR=black> </h3>
+	<pre>
 
-		<div class="row">
-  
-		  <div class="col-md-1">
-			 <b><p style="font-size: large;"> Project Ideas</b>
-		  </div>
-		  <div class="col-md-3">
-			  <b>Fix, Steady Go Pro for Diver</b>
-		  </div>
-  
-		  <div class="col-md-3">
-			<b> An Image Recignotion Drone</b>
-		  </div>
-		</div>
-  
-		<div class="row">
+Many divers dive to experience the magnificient environment 
+underwater and want to capture this environment through underwater
+cameras. When a diver is diving, they have to focus on many 
+life-critical things like their oxygen levels, how close are they to
+their dive-partners,etc.However, with current underwater cameras, the
+diver has to pay atention to wheather or not the camera will float 
+away from them(some product's solve this problem). However,the diver
+has to pay their focus on which mode of the camera they're using and 
+switch the mode. Using a camera underwater should take the least 
+amount of focus of a diver as they have to focus on more important
+ things.
+	</pre>	
 
-		  <div class="col-md-1">
-			<FONT COLOR=red><b>The problem: </b><FONT COLOR=black>
-		  </div>
+	<h3>
+		<FONT COLOR=red><b>The Solution: </b><FONT COLOR=black> 
+	</h3>
+	<pre>
+The solution I have is that there's a screen or set of buttons
+strapped to the the diver right hand. The circuit is connected
+to another electronic board towards the head of the person 
+where the camera is strapped to the face. The communication 
+with hand and the electronic board is done through electronic 
+cables that goes through the right arm	
+	</pre>	
 
-		  <div class="col-md-3">
-			Many divers dive to experience the magnificient environment 
-			underwater and want to capture this environment through underwater
-			cameras. When a diver is diving, they have to focus on many life-critical 
-			things like their oxygen levels, how close are they to their dive-partners,etc.
-			However, with current underwater cameras, the diver has to pay atention to wheather
-			or not the camera will float away from them(some product's solve this problem) but also
-			they have click
-			
-		</div>
+	<h3><FONT COLOR=red><b>Potential Problems and Areas to Focus On </b><FONT COLOR=black>  </h3>
+	<pre>
+Every compenent of product have to be water proof as well 
+withstand pressures around 4atm (at 30m depth). Especially
+the design of the system  at the hand will be though as it has
+to be easily usable, compact, and water-proof. I'll have strip
+that'll hold the cables to the arm but they have be waterproof 
+as well as allow felexibility for the movement of the arm. I plan
+a special casing for the go-pro and the micro-controller set-up. 
+The set-up at the hand must be tightly joined together so that it
+works with various movements of head underwater and also deciding
+how to control the go-pro, mechanically or by some electric or
+wireless, will be though
+	</pre>
 
-		<div class="col-md-3">
-		</div>
+	<h3> <FONT COLOR=red><b>Some Images </b><FONT COLOR=black></h3>
+	<figure>
+		<img src="Cable-demo.jpeg" alt="demonstration of cables" width="500" height="500">
+		<figcaption style="text-align: justify;">
+			<pre>
+In this photo the charger at my hand represents, the device on my hand.
+The device communicates with the go-pro by a cable that's taped to my arm
+On my actual product I plan to use velctro to attach the cable to the arm.
+The cable in the photo wraps around my head because it's too long. In 
+the actual product it'll connect to the set-up at my head
+			</pre>
+		</figcaption>
+	  </figure>
 
-  
-		</div>
-  
-  
-	  </div>
 		  
 
 </body>
@@ -98,28 +127,42 @@
 
 
 
+<!--
 
 
+Many divers dive to experience the magnificient environment 
+			underwater and want to capture this environment through underwater
+			cameras. When a diver is diving, they have to focus on many life-critical 
+			things like their oxygen levels, how close are they to their dive-partners,
+			etc.However, with current underwater cameras, the diver has to pay atention 
+			to wheather or not the camera will float away from them(some product's solve 
+			this problem). However,the diver has to pay their focus on which mode of 
+			the camera they're using and switch the mode. Using a camera underwater 
+			should take the least amount of focus of a diver as they have to focus 
+			on more important things.
+			<p>	
+		  </div>
 
+		  <div class="col-md-2">
+			<p>
+			The drone is not created for any problems. I want to do it
+			because I want to try building a drone and lear image recignition
+			</p>
+		  </div>
+		</div>
 
+		<div class="row">
+			<div class="col-md-1">
+				<FONT COLOR=red><b>The Solution: </b><FONT COLOR=black></FONT>
+			</div>
 
-
-<!---    
- ü
-<FONT COLOR=red><b>The problem: </b><FONT COLOR=black> when diving, divers are usually immersed in a beautifull environment 
-and they want to capture this environment by a camera (usuualy by a go pro).
-However, trying to keep the go-pro with you underwater takes atention from
-other important things a diver has to pay atention on such as checking how much 
-oxygen has left on their tank or keeping a close distance with their dive-partner
-	</pre>	
-
-	<pre>
-<FONT COLOR=red><b>The Solution: </b><FONT COLOR=black> I'm thinking about a product where the go-pro is attached 
-right above the mask(the water glass) or somewhere in the head and there's special glove or device on the
-right hand of the diver. The diver uses their hands or this device to communicate with the go-pro.
-It's like pushing a botton to capture a photo and another botton to start and stop recording a video. Or detecting 
-hand movement but I have no experience doing that. I plan on communicating beetween the device at hand  by
-a wire that goes through the divers right arm to the go-pro. The go-pro and some electronic are in a casing.
-The signal is sent to a mictrocontroller which pushes the buttons on the go-pro with the commands given by the hand
-	</pre>	
+			<div class="col-md-6">
+				<p>
+				The solution I have is that there's a screen or set of buttons
+				strapped to the the diver right hand. The circuit is connected to another
+				electronic board towards the head of the person where the camera
+				is strapped to the face. The communication with hand and the 
+				electronic board is done through electronic cables that goes through the right 
+				arm
+				</p>
 -->
