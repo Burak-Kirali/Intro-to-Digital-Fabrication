@@ -3,7 +3,7 @@
 
 <title>PS70: Intro to Digital Fabrication </title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="./style.css" rel="stylesheet">
+  <link href="../../style.css" rel="stylesheet">
 
   <style type="text/css">
 		
@@ -11,6 +11,7 @@
 		{
 			 color: blue;
 			 font-size: 50px;
+			 margin-left: 50px;
 		}
 		h2
 		{
@@ -18,6 +19,12 @@
 			color: blue;
 			font-size: 40px;
 			font-weight: bold;
+		}
+
+		h2.left_aligned
+		{
+			text-align: left; 
+			margin-left: 50px;
 		}
 
 		h3
@@ -35,6 +42,20 @@
 		text-align: center;
 		font-size: 20px;
 	
+		}
+		p{
+			text-align: center;
+			font-size: 20px;
+			margin: 10px 50px;
+		}
+
+		p.in-grid
+		{
+			margin: 10px 50px;
+		}
+		p.no-grid
+		{
+			margin: 25px 300px;
 		}
 
 		img
@@ -340,79 +361,383 @@ trim an apply the 10mm fillet to edges of the pentagon.
 			</div>
 		</div>
 	</div>
-
 	<br>
+
+	<hr>
+	<h1 > Cading 2 Household object</h1>
 	<hr>
 
-	<h1> Cading a chair, (cad-ed object1)</h1>
+	<h3>How did I learn Fusion</h3>
+	<p class="no-grid">
+		Last year on my summer camp I was thought solidworks
+		and had learned basic principles of cading like, skecthing, extruding
+		revolving, removing, fillets. Luckily fusion360 is really similar to 
+		solidworks that's why I was easily able to learn the principles either by
+		a quick google search or just  by the UI of the solidworks. For learning new 
+		things like loft, I used some youtube tutorials.
+	</p>
+	<hr>
 
-	<pre>
-I wanted to cad something different for me that's why I choose
-the chair at the lab.
-	</pre>
-	<img src="" width="750" height="1000">
-	<pre>
-I original wanted to cad the seat as one file, however, cading the 
-specific shapes of the legs was a challenge so I split the design into 3
-cads. The top seating part, the middle part and the legs. Each on the seat 
-was unique to simplfy my design I choosed one of the legs and placed 4 around
-the center. The legs had holes in it but again to simply I simply ignored them.
-The top seating part is big square that a person would sit on. The legs,
-meet the at the center and to simplfy my design and easily pattern the legs,
-I've caded the part where the legs met as a different part. After cading these 3
-parts I've assembled them on another file.
-	</pre>
+	<h2 class="left_aligned"> Cading a Seat</h2>
+	<p class="no-grid">
+		I wanted to cad something different for me that's why I choose
+		the chair at the lab.
+	</p>
+	<img src="photos-or-visuals/seat/photo-seat.jpeg" width="750" height="1000">
+	<p  class="no-grid">
+		I original wanted to cad the seat as one file, however, cading the 
+		specific shapes of the legs was a challenge so I split the design into 3
+		cads. While cading I didn't knew the existence of features like 
+		project/inclue -intersect nor the rib feature that's why I went with the assembly mode.
+		If knew those I would've learned those but since I didn't use them I got experience
+		using the assembly. I learned the existing of them Monday and I cad-ed the chair on Friday.
+		<br>
+		Anyway, the top seating part, the middle part and the legs has was cad-ed on different
+		files then assembled on another file. Each lef on the seat 
+		was unique. To simplfy my design I choosed one of the legs and placed 4 around
+		the center. The legs had holes in it but again to simply I simply ignored them.
+		The top seating part is big square that a person would sit on. The legs,
+		meet the at the center and to simplfy my design and easily pattern the legs,
+		I've caded the part where the legs met as a different part. After cading these 3
+		parts I've assembled them on another file.
+	</p>
 
 	<div class="container-fluid text-center">
 		<div class="row">
 			<div class="col-3">
-				<img src="" width="450" height="600">
-				<pre>
-The photo of the chair
-				</pre>
+				<img src="photos-or-visuals/seat/photo-seat.jpeg" width="300" height="450">
+				<p class="in-grid">
+					The photo of the seat
+				</p>
 			</div>
 			<div class="col-3">
-				<img src="photos-or-visuals/seat/seat-top.jpeg" width="450" height="600">
-				<pre>
-The top of the circle. This part
-is just a square with some fillets
-and extruded by the thickness
-				</pre>
+				<img src="photos-or-visuals/seat/seat-top.jpeg" width="300" height="450">
+				<p class="in-grid">
+
+					The top of the circle. This part
+					is just a square with some fillets
+					and extruded by the thickness
+				</p>
 			</div>
 			<div class="col-3">
-				<img src="" width="450" height="600">
-				<pre>
-The leg of the seat I've choosen
-to cad and simplfy, it has a 
-interesting geometry	
+				<img src="photos-or-visuals/seat/leg-choosen_tobe-caded.jpeg" width="300" height="450">
+
+				<p class="in-grid">
+					The leg of the seat I've choosen
+					to cad. I've only not added the 
+					eliptical holes in it. If I did
+					I'd had an experience cutting holes
+					but on my 2nd object(glue bottle)
+					I've used the remove ability	
 				</pre>
 
 			</div>
 			<div class="col-3">
-				<img src=" width="450" height="600">
-				<pre>
-The middle of the circle I've seperated
-to simplfy. It's just square-prism with
-length of the thickness and extruded by
-the length of the center part.
-				</pre>		
+				<img src="photos-or-visuals/seat/center-part.jpeg" width="300" height="450">
+				<p>
+					The middle of the circle I've seperated
+					to simplfy. It's just a square-prism with
+					length of the thickness and extruded by
+					the length of the center part.
+				</p>		
 			</div>
 		</div>
 	</div>
 
-	<pre>
-The thickness for square part and the legs were luckliy both 11.8mm
-besides the cad-ing of the center part 11.8mö was used to extrude
+	<p class="no-grid">
+		The thickness for square part and the legs were luckliy both 11.8mm
+		besides the cad-ing of the center part 11.8mö was used to extrude
+	</p>
+
+
+	<h2 class="left_aligned"> Design of the Individual Parts</h2>
+	<h3>The Square Part</h3>
+	<p class="no-grid">
+		I meassured the length of the square with a ruler I found on the lab 
+		side length was 38.5cm and again using the ruler I found the fillet 
+		radius to be 4cm. The cad-ing was simple as it's just a square with
+		fillet's that extruded by 11.8mm
 	</pre>
 
-	<h2> Design of the Big Square</h2>
-	<pre>
-I meassured the length of the square with a ruler I found on the lab 
-side length was 38.5cm and again using the ruler I found the fillet 
-radius to be 4cm. The cad-ing was simple as it's just a square with
-fillet's that extruded by 11.8m
-	</pre>
+	<div class="container-fluid text-center">
+		<div class="row ">
+	
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/seat/2D-modelling-the-square.png" width="450" height="600">
+				<p>
+					The dimension  of the square
+				</p>
+			</div>
 
+
+			<div class="col-4 border border-dark">
+				<iframe src="https://robcol60.autodesk360.com/shares/public/SHd38bfQT1fb47330c9987e92b959ecfa0ec?mode=embed" aşgi width="560" height="420" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0">
+
+				</iframe>
+			</div>
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/seat/extruding-square.png" width="400" height="600">
+				<p class="in-grid">
+					Unfortunately whent trying the 
+					take a screenshot while extruding 
+					the extruded bits don't show
+				</p>		
+			</div>
+		</div>
+	</div>
+	<h3>Design of the Center Leg</h3>
+	<p class="no-grid">
+		Design of the center leg was simmple, I jsut created a square with side-lengths of
+		11.8mm thene xtruded by 34.5cm which is length of it. I measured the 34.5cm by putting a ruler
+		at a place where the legs intersected. 
+	</p>
+
+	<div class="container-fluid text-center">
+		<div class="row ">
+	
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/seat/sketch-center-part.png" width="225" height="300">
+				<img src="photos-or-visuals/seat/extruding-center-part.png" width="225" height="300">
+				<p>
+					Here are some photos from the cading of this part
+				</p>
+			</div>
+
+
+			<div class="col-4 border border-dark">
+	
+				<iframe src="https://robcol60.autodesk360.com/shares/public/SHd38bfQT1fb47330c9957d08a8ae882de0a?mode=embed" width="560" height="420" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0">
+
+				</iframe>
+			</div>
+
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/seat/center-part.jpeg" width="400" height="600">
+				<p class="in-grid">
+					the center part is the common
+					place where the legs meet
+				</p>		 
+			</div>
+		</div>
+	</div>
+	
+	
+	<h3>Design of The Legs</h3>
+
+	<p class="no-grid">
+		The design of the legs was the most complex to the other 2 parts. This was
+		because the leg had a lot of details I wanted to present in my cad, but it was
+		basicly sketching a 2-d shape then extruding it by 11.8mm
+	</p>
+
+	<div class="container-fluid text-center">
+		<div class="row ">
+	
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/seat/leg-sketch.png" width="600" height="400">
+				<p>
+					
+		The leg has a part that's atteched to big square. It's length it the (length of the square-thickness)/2
+		which is (38.5cm-11.8mm)/2 The length of the place where it attached to the center-part is the height of that place which is 
+		34.5cm. From that point it goes 3cm flat before a slope. That slope has vertical distance and horizontal distance of 4cm
+		that's why I caded it by a helper construction line that's 4cm wide then created a line with a length 4*sqrt(2) and also added
+		the constraint being 45° from that line. After that there is 9cm of flatness before another slope. I could've found the measurements 
+		for the longer slope. There's another 9cm flatness on the place where the leg intersects the big-square so I drew that line
+		then connected the open edges of both 9cm lines to make that long slope. I found the fillet radius of the 45° line's intersections to be 1.5cm
+		and the fillet radius for the big slope and the vertical line to be 2.5cm. I found all the measurements besides the thickness with a ruler
+				</p>
+			</div>
+
+			<div class="col-4 border border-dark">
+				<iframe src="https://robcol60.autodesk360.com/shares/public/SHd38bfQT1fb47330c991e4d42ea26b13668?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0">
+
+				</iframe>
+			</div>
+
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/seat/leg-choosen_tobe-caded.jpeg" width="400" height="600">
+				<p class="in-grid">
+					I've choosen this leg as it has detailed geometry while being not too complex
+				</p>		
+			</div>
+		</div>
+	</div>
+
+	<h2 > Assembling the part's together</h2>
+	<p class="no-grid">
+		While assembling the parts I wanted to join leg with the center part
+		then do a circular permuation. Since I don't have a lign rigth at the center of the center-square-part 
+		I had to center-square-part be aligned with the origin. I created a new file then added the big-square part in it
+		Using the align tool, I aligned to big-square with the center. Then I added the center-square to the file
+		then I selected one of the square of faces of the center-piece and joined it to the center of the big-square. 
+		While doing I tried to make sure that I was selecting the correct center of the big-center as the 6centers for it's 6 faces
+		were near the same sport. AFter that I added the leg piece to the file and rotated it so that it could easily be aligned with the center piece.
+		I also rotate dthe center-piece before joining. I'm not going to include these rotations here as they wary each time I add the files.
+
+		<br>
+
+		After adding the leg, I aligned the shorter-length side of the leg with center piece and joined them. I sometimes ran into 
+		problems where those 2 pieces won't exatly join but I don't know why they occured they occured randomly. After joining the leg and
+		the center piece. I selected the leg and aplied a circular pattern with 4 copies with the axis that's perpendicular to the center-piece. 
+		Each time the axis that the big-square centered on was different so I can't say precise axis names
+	</p>
+
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-3">
+				<img src="photos-or-visuals/seat/centering-the-big-square.png" width="300" height="450">
+				<p class="in-grid">
+					centering the big-square with the origin
+				</p>
+			</div>
+			<div class="col-3">
+				<img src="photos-or-visuals/seat/joining-the_rod-with-square.png" width="300" height="450">
+				<p class="in-grid">
+					joining the center-square rod with with big square
+					by joining a face of the rod by the center of the big-square
+				</p>
+			</div>
+			<div class="col-3">
+				<img src="photos-or-visuals/seat/joining-the-leg.png" width="300" height="450">
+
+				<p class="in-grid">
+					In here I join the leg(left of the photo) to
+					the center rod
+				</pre>
+
+			</div>
+			<div class="col-3">
+				<img src="photos-or-visuals/seat/circular-permuation-leg.png" width="300" height="450">
+				<p>
+					In here I do circular permutation by the leg and the center
+				</p>		
+			</div>
+		</div>
+	</div>
+
+	<div style="text-align: center;">
+	<iframe src="https://robcol60.autodesk360.com/shares/public/SHd38bfQT1fb47330c999900fa9a22a26985?mode=embed" width="1000" height="750" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+	</div>
+
+	</iframe>
+
+	<br>
+	<hr>
+	
+	<h1>Cad-ing a Glue Bootle(CAD object 2) </h1>
+	<p class="no-grid">
+		The reason I wanted to cad a glue bottle was to learn lofting in Fusion and also experimenting with coils. I measured all the lengths
+		by a caliber but my measurements might be wrong. Also while trying to sue the loft, I had problems with it when I tried to add the thickness of the bottle
+		that's while cading it I simply ignored that the bottle has a big space inside and therated it as one solid-full-shape.
+		
+		<img src="photos-or-visuals/glue bottle/glue-bottle.jpeg" width="700" height="800">
+		<br>
+
+		The geometry of the bottle might be more complex but assumed it's an elipse until the transitioning to a circle. The elipse had a major diameter
+		of 64mm and minor radius of 32.5mm
+		For the bottom part I measured the height of 94.3m and a fillet with 3.92mm radius at the bottom. Also there's a curve at the bottom. It's like the 
+		remaming elipse bit(after the fillet) transitions into a point who is 3.92mm in to the bottle. To make this I drew an elipse at the bottom
+		the created a fillet 3.92mm above it, caded a 1mm circle. I could've searched a way to do this but I though that doing a 1mm circle would function nearly same
+		as a 1point. Then did a loft that removed sections from the bottle.
+		<br>
+		I measured the circular part was 6.22 above the elipse. So after extruding the elipse, I created another plane 6.22mm above the extruded elipse and 
+		drew a circle with a diamet of 23.38mm. Then I used loft to connect these 2 surfaces together.
+	</p>
+
+
+	<div class="container-fluid text-center">
+		<div class="row ">
+	
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/glue bottle/cad-photos/elipse-dimensions.png" width="400" height="600">
+				<p>
+					Here are the dimensions of the elipse. I extruded this by 94.3mm
+				</p>
+			</div>
+
+
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/glue bottle/cad-photos/fillet.png" width="400" height="600">
+				<p>
+					Here I aply a 3.92mm fillet
+				</p>
+				
+			</div>
+
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/glue bottle/cad-photos/upper-new-plane.png" width="400" height="600">
+				<p class="in-grid">
+					In here I create a surface 6.22mm above the top surface of the extrude.
+					I do something similar to create a plane 3.92mm above the lower surface of the bottle.
+					That surface 
+				</p>		 
+			</div>
+		</div>
+
+		<div class="row ">
+	
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/glue bottle/cad-photos/loft-remove.png" width="400" height="600">
+				<p>
+					In here I create a loft from the bottom of the elipse remaning of the fillet. I had to draw
+					the same elipse on top of the surface. Then with the 1mm circle 3.92mm above I create loft then use it to remove
+					volume from the bottle
+				</p>
+			</div>
+
+
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/glue bottle/cad-photos/circle-skecth.png" width="400" height="600">
+				<p>
+					In here I sketch a circle with 23.38mm diameter on the new surface
+				</p>
+			</div>
+
+			<div class="col-4 border border-dark">
+				<img src="photos-or-visuals/glue bottle/cad-photos/upper-loft.png" width="400" height="600">
+				<p class="in-grid">
+					Here's the photo of the upper-loft
+					that connectecs the elipse to the circle
+					Also I added a 2mm fillet at the edge of the elipse for a smooth transtion
+				</p>		 
+			</div>
+		</div>
+	</div>
+
+	<p class="no-grid">
+		The upper part of the bottle is complicated but basically, the 23.38mm is 2mm thick part and there's 
+		21mm part that's 10mm high and contains the coil. While trying to add the coil, I realized it ahd to touch 
+		the edge of the cylinder, so I split the 10mm section into an 8.25mm that contains the coil and the coil extends 0.5mm out from the top
+		at this top time I made the coil full inline. Then I extruded 1.75mm more to reach the 10mm. Then I made the coil centered to the edge.
+		If I didn't did this the 1.75mm would not be circle and have a awkward shape. Also the coil had diameter of 21mm and the each rol's diameter was 1.5mm 
+		with  a height of 6.75-1.5mm because, the total height from top to the bottom was 6.75mm but fusion threats the height as from the top center to
+		lover center so I had to substract the diamet off.
+	</p>
+
+	<div class="row ">
+	
+		<div class="col-4 border border-dark">
+			<img src="photos-or-visuals/glue bottle/cad-photos/loft-remove.png" width="400" height="600">
+			<p>
+				In here I create a loft from the bottom of the elipse remaning of the fillet. I had to draw
+				the same elipse on top of the surface. Then with the 1mm circle 3.92mm above I create loft then use it to remove
+				volume from the bottle
+			</p>
+		</div>
+
+
+		<div class="col-4 border border-dark">
+			<iframe src="https://robcol60.autodesk360.com/shares/public/SHd38bfQT1fb47330c99d62ef9d18cd05620?mode=embed" width="560" height="420" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0">
+			</iframe>
+		</div>
+		<div class="col-4 border border-dark">
+			<img src="photos-or-visuals/glue bottle/cad-photos/coil.png" width="400" height="600">
+			<p class="in-grid">
+				Here's the photo of the coil
+			</p>		 
+		</div>
+	</div>
+</div>
 
 		  
 
