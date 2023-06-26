@@ -9,9 +9,15 @@
 		
 		h1
 		{
-			text-align: center;
 			 color: blue;
 			 font-size: 50px;
+		}
+		h2
+		{
+			text-align: center;
+			color: blue;
+			font-size: 40px;
+			font-weight: bold;
 		}
 
 		h3
@@ -52,15 +58,362 @@
 </nav>
 
 <body style="background-color: dodgerblue;">
-	<h1> Buraks Trial With Pentagons</h1>
+	<h1> Buraks Experimentation With Pentagons and CAD-ing</h1>
+	<hr>
+	
+	<h2> Why pentagons</h2>
 
-    <p>for my initial sketch 10mm fillets for the edge of pentagon, 2mm for the edges of indets edge and assumed 0.4mm tref
-        with 4m thicknesss. Didn't record the length that indent went on my first try.
-    </p>
+	<pre >
+This week for my press-fit proejct I wanted to experiment
+with pentagons. I was inspired by the hexagonal
+structure in the lab and wanted to try a shape with odd number
+of sides. Even numbered polygons have sides parelel to each other
+and are generally symetrical but odd-numbered polygons breaks this 
+symetry and I wanted to see what kind of structures I may see arrive 
+with the pentagon. I'm happy with the shape I've gotten. I could've 
+added more pentagons but the laser-cutter was busy while I was at
+the maker space so I only printed like 30-40 pentagons
+24 was used on the final design while the rest was used to find the 
+kerf and modify my design.
+	</pre>
 
-	<p>
-		V2, wrong messured the thickness , it was 3.8 not 3.6. Also 3.4mm indent wideness. means 0.1 overestimate for the kerf
-	</p>
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/hexagon_design.jpeg" width="450" height="600">
+				the hexagonal design behind my inspiration
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon_final_shape.jpeg" width="450" height="600">
+				my final shape from my pentagons
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/singel_pentagon.jpeg" width="450" height="600">
+				a signal pentagon that I laser-cuted alot
+
+			</div>
+
+		</div>
+	</div>
+	<h2>Past Designs</h2>
+	<pre> 
+For all of my designs the side length of the pentagon was 30mm, 
+fillet's radius for the corner was 10mm and the fillet radius
+for the outer corners was 2mm. I didn't record my initial 
+indent depth for the first time but for all the others,
+it is 10mm. When cading my polygon, to make it's the cading
+easier I wanted the lover side to be parelel with the x-axis.
+To achieve this I had to cad  with an edge-polygon
+	</pre>
+<!--some images-->
+<div class="container-fluid text-center">
+	<div class="row">
+		<div class="col-4">
+			<img src="photos-or-visuals/pentagon/pentagon-side.png" width="450" height="600">
+				Pentagons side length
+		</div>
+		<div class="col-4">
+			<img src="photos-or-visuals/pentagon/fillet_radius.png" width="600" height="400">
+			The fillet's radius'
+		</div>
+		<div class="col-4">
+			<img src="photos-or-visuals/pentagon/showing-indent-length.png" width="450" height="400">
+			<pre>
+The length of the indent for versions beyond 
+the 1st one(this is for only to show the indent
+length) the width of the indent is inaccurate
+			</pre>
+		</div>
+
+	</div>
+</div>
+
+<pre>
+On my my first design the indent-width was too big and I assumed the laser laser-cutter
+had a 0.65mm kerf and cadded my 2nd design with that. When I printed my v2, I tne 
+width was too small and the pieces didn't go each other. Then I measured the thickness 
+and width my caliber and altered my design until v6 with that(it took me 5 tries to 
+understand the kerf was 0.2mm) the reason I had this many trials was that the card board
+we use can sequaze if a little pressure is aplied by the caliber. That's why it was a hard
+to precisely measure the indent-width but the thickness of all card-boards beside the fist one 
+was 3.8mm. While I was cad-ing I didn't my pentagon, so thickness length was only used to determine 
+indent width. Here are some photos of how I measured the indent length and thickness
+</pre>
+<!--İmage for measurement-->
+<div class="container-fluid text-center">
+	<div class="row">
+		<div class="col-6">
+			<img src="photos-or-visuals/pentagon/measuring_thickness.jpeg" width="450" height="600">
+				An example of me measuring the thickness
+		</div>
+		<div class="col-6">
+			<img src="photos-or-visuals/pentagon/measuring-indent.jpeg" width="600" height="600">
+				<pre>
+An example of how I measured the indent
+I used the part of caliber designed to
+measure lengths of inside things.
+				</pre>
+		</div>
+	</div>
+</div>
+
+	<h2> Some Problems
+	</h2>
+<pre>
+On the class my teacher showed a way to mirror the indent-width 
+to make the indent. However while cading what I realized was That
+a change to a side didn't apply to another side so on my final cading
+the indent-width was one whole line. Also to make the other 4 indents,
+I used a 5-way circular pattern and a problem I faced there was that when 
+I aplied the fillets after the pattern the symetry will break and a change
+to the original indent-width was not aplied to other patterns. To fix this 
+I aplied the fillets first then did the circular pattern then  did the 
+trimming. I assume these problems occured due to fillets breaking constraints
+</pre>
+	<!--Photos of the problems described-->
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-6">
+				<img src="photos-or-visuals/pentagon/mirror-not-working.png" width="450" height="600">
+					<pre>
+An example of the mirror not aplied
+In here I think the original indent- 
+width was 4mm then I tried to change 
+it to 3.6mm, but as you can see it's 
+not aplied to the left part
+					</pre>
+			</div>
+			<div class="col-6">
+					<pre>
+
+
+
+
+
+
+I couldn't find a version of the pentagon
+with an asymetrical indent-width's. But I 
+realized it at my v6, then made the neccesary
+fixes for v7(the final version). On v6 there 
+one side with 3.4mm indent length and when printed
+those sides fitted together tight but not too tight
+and not loose 
+					</pre>
+			</div>
+		</div>
+	</div>
+
+
+
+	<h2>The current design</h2>
+	<pre>
+For my current design I've used a card-board with 3.8mm thickness
+0.2mm kerf, 2mm for inden't corner's fillet radius and 10mm for the 
+radius of the corners of the pentagon with a 30mm side length. To make
+the design more understandable and readable for me all of the numbers 
+have a variable associated with them
+
+While cading I wanted the drawing to be easy so I wanted to lower-side 
+of the pentagon paralel to x-axis, the easiest way to make this is by 
+edge-polygon and setting the number of sides to 5, then by sketch-dimensions 
+I set the side length to 30mm.
+	</pre>
+	<!--Photos of the problems described-->
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/selecting-edge polygon.png" width="450" height="600">
+		
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/setting-number-sides.png" width="450" height="600">
+
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/setting_ide_length.png" width="300" height="300">
+				
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/final_side_length.png" width="300" height="300">
+					
+			</div>
+			
+		</div>
+	</div>
+
+	<pre>
+The indent-width has to be centered on the edge and be one line. If I try to make it mirrored
+I get the problem of smyetry not working as discussed earlier. To make the indent-width be 
+one single line,I created a construction line 2 times indent-length that goes from the 
+center of an edge to the center, then created a normal line that's perpendicular
+to the previous line and added the constrains of being the mid-point
+	</pre>
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/the-construction-line.png" width="450" height="600">
+				<pre>
+The indent-length is 10mm so this consturction line has a length of 20mm.
+				</pre>
+		
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/midpoints.png" width="450" height="600">
+				<pre>
+I just create a perpendicular line
+and apply the midpoint constraint.
+This assured that indent-width is 
+centered and is 10mm away from the
+edge.
+				</pre>
+
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/length-of-width.png" width="450" height="600">
+				<pre>
+The laser cutter will cut away from 
+both edges of the ident so while I 
+cadding I did thickness-2*kerf. 
+Thickness is 3.8mm and kerf is 0.2mm
+so a indent-width of 3.4mm on the design
+I did not account for kerf on the 
+pentagon's edges
+				</pre>		
+			</div>
+		</div>
+	</div>
+
+	<pre>
+After setting the indent-width's length. I drew 2 perpendicular
+lines from the edges of the indent-width to the edge. Since the 
+indent-width is centered with indent-width and half the length of
+the construction line is 10mm, these 2 lines had a length of 10mm.
+
+After that I trimmed the part that'll be the indent and aplied a 2mm
+fillet's. Because of the broken symetry problem disccused earlier, I 
+aplied the fillet's first and selected the 5 lines. 2 edges, 2 fillets
+and indent-width and did a 5way circular pattern by the center.
+	</pre>
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/two-perpendicular-lines.png" width="450" height="600">
+				<pre>
+In here I drew 2 perpendicular
+lines from the edge of the indent length
+				</pre>
+		
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/indent-fillet's.png" width="450" height="600">
+				<pre>
+In here I added	2 fillet's to 
+both corners of the inden		
+				</pre>
+
+			</div>
+			<div class="col-4">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/circular-permuation.png" width="450" height="600">
+				<pre>
+Selecting the five lines 
+and selecting the center 
+of the pentagon as the 
+center for the circular
+pattern and aplying it.
+				</pre>		
+			</div>
+		</div>
+	</div>
+
+	<pre>
+Now I have to trim the indent's from the pattern as the pattern did not
+trim an apply the 10mm fillet to edges of the pentagon.
+	</pre>
+
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-6">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/not_trimmed-pattern.png" width="450" height="600">		
+			</div>
+			<div class="col-6">
+				<img src="photos-or-visuals/pentagon/pentagon-final-sketch/filleting-edges.png" width="450" height="600">
+			</div>
+					
+			</div>
+		</div>
+	</div>
+
+	<br>
+	<hr>
+
+	<h1> Cading a chair, (cad-ed object1)</h1>
+
+	<pre>
+I wanted to cad something different for me that's why I choose
+the chair at the lab.
+	</pre>
+	<img src="" width="750" height="1000">
+	<pre>
+I original wanted to cad the seat as one file, however, cading the 
+specific shapes of the legs was a challenge so I split the design into 3
+cads. The top seating part, the middle part and the legs. Each on the seat 
+was unique to simplfy my design I choosed one of the legs and placed 4 around
+the center. The legs had holes in it but again to simply I simply ignored them.
+The top seating part is big square that a person would sit on. The legs,
+meet the at the center and to simplfy my design and easily pattern the legs,
+I've caded the part where the legs met as a different part. After cading these 3
+parts I've assembled them on another file.
+	</pre>
+
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-3">
+				<img src="" width="450" height="600">
+				<pre>
+The photo of the chair
+				</pre>
+			</div>
+			<div class="col-3">
+				<img src="photos-or-visuals/seat/seat-top.jpeg" width="450" height="600">
+				<pre>
+The top of the circle. This part
+is just a square with some fillets
+and extruded by the thickness
+				</pre>
+			</div>
+			<div class="col-3">
+				<img src="" width="450" height="600">
+				<pre>
+The leg of the seat I've choosen
+to cad and simplfy, it has a 
+interesting geometry	
+				</pre>
+
+			</div>
+			<div class="col-3">
+				<img src=" width="450" height="600">
+				<pre>
+The middle of the circle I've seperated
+to simplfy. It's just square-prism with
+length of the thickness and extruded by
+the length of the center part.
+				</pre>		
+			</div>
+		</div>
+	</div>
+
+	<pre>
+The thickness for square part and the legs were luckliy both 11.8mm
+besides the cad-ing of the center part 11.8mö was used to extrude
+	</pre>
+
+	<h2> Design of the Big Square</h2>
+	<pre>
+I meassured the length of the square with a ruler I found on the lab 
+side length was 38.5cm and again using the ruler I found the fillet 
+radius to be 4cm. The cad-ing was simple as it's just a square with
+fillet's that extruded by 11.8m
+	</pre>
+
+
 		  
 
 </body>
