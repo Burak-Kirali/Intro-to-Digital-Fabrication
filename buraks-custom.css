@@ -38,16 +38,16 @@ font-size: 20px;
 p{
     text-align: center;
     font-size: 20px;
-    margin: 10px 50px;
+    margin: 10px 5%;
 }
 
 p.in-grid
 {
-    margin: 10px 50px;
+    margin: 10px 5%;
 }
 p.no-grid
 {
-    margin: 25px 300px;
+    margin: 25px 15%;
 }
 
 img
@@ -62,6 +62,11 @@ a.in-page-link
     font-size: 20px;
     color:blue;
 }
+
+iframe {
+    display: block;
+    margin: 0 auto;
+ }
 
 pre
 {

@@ -19,7 +19,270 @@
   </div>
 </nav>
 
-<body style="background-color: dodgerblue;">
+<body>
+  <h2>Burak's Failed Rotator Project</h2>
+
+  <p class="no-grid">
+    This week I was inspired by the square orbits, a visualization of fourie transforms, and wanted my kinetic sculpture to represent a square idea.
+    The idea is that there's a rod that rotates and at the end of the rod another rod rotates and the path of a point in the outer rod around the center piece resembles that of an
+    square. Here's the video of my inspiration.
+  </p>
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/t99CmgJAXbg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+  </iframe>
+
+  <h3>Why I couldn't finish it</h3>
+  <p class="no-grid"> 
+    When I was planning my design I primarily focused on the gears and the how the 2 rotating rods will work. During testing those parts worked
+    and my idea of transfering rotation to the edge by multiple gears also worked. However, for my design I needed a 2cm tall rod to stick out of the motor 
+    to make all the systems work and I had hard a time attacthing that rod to the motor. First I tried to attach it by heat-shrinks inspired by one of my classmates
+    it broke 2-3 times then I decided to glue it which still didn't work. I was going to give up when someone suggested to tape it, and it worked. However it took me 
+    3 hours to realize that tape was the option. I initially disregarded tape as I thought it wouldn't create a rigid connection. That's why I went with multiple
+    ideas which all failed. Because I spent way more time on the rod then I had anticipated I couldn't finished my design, but I tested my gear mechanism and prooved that my 
+    idea worked. Also throughout my kinetic scultupture I always used M3 bolt mainly 20mm lonh but using some 30mm long ones to attach the support sturcture to the motor.
+    I've chossen m3 because it was abundant in the lab and had a lot of nuts that I can use with.
+  </p>
+  
+  <div class="container-fluid text-center">
+		<div class="row ">
+
+			<div class="col-4 border border-dark">
+				<video controls>
+          <source src="photos-codes-videos/gear-design-working.mp4" type="video/mp4" >
+        </video>
+    
+				<p>
+					In this video I show that I can transfer a rotation from the center gear to the most outer gear and a piece there can rotate. If had finished my design,
+          the motor would turn the big piece I was holding. With this I would've achieved rotation on a already rotating piece.
+				</p>
+			</div>
+
+
+			<div class="col-4 border border-dark">
+        <iframe src="https://robcol60.autodesk360.com/shares/public/SHd38bfQT1fb47330c993e139cb39fea0fc5?mode=embed" width="560" height="420" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+				<p>
+          This is the main design of my kinetic sculpture. There are 4 gears that carry the rotation from the center to edge. These gears have 18 teeths. To make the outer 
+          rod spin 3 times more compared the rest of the system I atteched a 6 teeth gear to the end and a rod on top of it. I'm using a wooden
+          rod to rotate the main center gear and the outer gear. It has a diameter of 4.82mm and the 2 gears have designed for that. There's also a supoort structure to hold the wooden
+          rod for the little gear. On the main rod you can soee 4 holes cutten exatcly for that. I had 3 gears that would transfer
+          the rotation from center to the dge of the rod. I wanted them to rigedly attach to the rod while also allowing them to spin. To achieve I thought of
+          making a big hole in them and putting a circular piece that I bolt on the main rod. You can see this circular piece on the video.
+          It's a little hard to see it here. While I was designing the big rod I knew that I had to balance the 
+          weight of the gears on the opposite side to make it horizontal. The way I did was that I found a metal piece and drilled 2 holes in. Then I drilled
+          2 holes in the card-board piece. Since I did this after laser-cutting it's not shown the fusion design. I drilled 2 holes so that the metal piece would rotate. When it rotated
+          it ofset the center of mass from the main axis and caused the rod to tilt. I tried to put this metal piece towards to edge of the rod and far away from the center so that 
+          it balanced better.
+        </p>
+			</div>
+
+			<div class="col-4 border border-dark">
+				<img src="photos-codes-videos/motor-attached.jpg" width="400" height="600">
+				<p >
+					This is how I attached a rod to the motor. I found this wooden rod at the lab and cut it by wooden saw.
+          Before taping it I thought that if I flatten the area over the rotating rod, the rod will rotate better(I had problem with the motor being in path of the rod). For that
+          I cad-ed a piece to attach to the motor. Then I used 2, M3-30mm bolts to the attach it to the motor. The nuts I used only covered the top of the rod. To make 
+          tighten he wooden piece I attached the same piece cut in card-board(I first cut in card-board then laser to make sure my design was correct). With this only the tip 
+          of the bolt was hanging and the nut secured. If hadn't put the card-board the the bolt will be loose and it moved up and down.
+				</p>
+        <br>
+        
+        <img src="photos-codes-videos/motor-support-sketch.png" width="400" height="400">
+
+        <p>
+          There were 3 parts of the yellow that I had to consider. The places for the M3 bolts, and the position of a little yellow circle and the rotating handle of the motor.
+          I measured the diameter and distance beetween bolt-holes and designed it accordingly. Instead of making a piece that fits perfectly into the yellow circle I 
+          decided to be redundant and made hole bigger then the circle and handle. Since I had redundancy, I made sure the the pieces were going through the hole. Besides that
+          to not interfere with other parts of the motor so I made it not too big.
+        </p>
+			</div>
+
+		</div><!--Row div finishes here-->
+	</div>
+
+  <h2>Design of the Individual Part Gears</h2>
+  <p> 
+    In my kinetic sculpture I had 3 different gear-designs. The center gear, the 3 middle gear and the small gear. Both the center gear
+    and the 3 middlegears have the same number of teeth and size, they only differ by the hole inside them as this holes is constrained
+    by how to gears attach to the main spinning rod. For 3 middle-gears I've cut a big hole in them to put the support hole that kept the 
+    20mm M3 bolts. The little gear had the 1/3 of the teeth of the other gears so that it would spin 3 times more. While I was making the gears
+    I used the python version of nthe spur-gean add-on in Fusion360. Also in one of the tutorials I've watched. I've learned that pitch diameter
+    is the place where 2 gears intersect. This allowed me to easily sketch the holes for main rotating part.
+
+  </p>
+
+  <div class="container-fluid text-center">
+		<div class="row ">
+
+			<div class="col-4 border border-dark">
+				<image src="photos-codes-videos/gear-specific-design/creating-of-4-gears.png" width="400" height="600">
+    
+				<p>
+          I don't have a specfic reason for many of the parameters chosen here. I've choosen 18 teeth so that the small 
+          gear still has plenty of gear. Also I wanted the distance beetween 2 gears to be 60mm and it happened to be
+          10/3 module of a 18 teeth gear. After creating the gear, I manually eddited the center hole to be 4.82mm. I achieved
+          this with playing with the skecth files the programs has generated.
+			
+				</p>
+        <image src="photos-codes-videos/gear-specific-design/center-gear-sketch.png width="400" height="600">
+
+			</div>
+
+
+			<div class="col-4 border border-dark">
+        <image src="photos-codes-videos/gear-specific-design/3gear-sketch.png" width="400" height="600">
+
+				<p>
+          When I was designing the 3 middle gears, I wanted them to be the same size as the center gear(that's why I'm not putting their creation here I used the same
+          numbers as I did in the  center gear). Also I wanted the center gear to attach to the main rod without wobbling. I thought aboout a tube that goes in the gear and This
+          tube is bolted the main rode. I made thigh margin with diameter's of the gear and the tube the gear. This allowed the gear to rotate while keeping in the same place
+          To achieve this I made a 8mm diameter in the middle. The tube had a 3mm hole in it for the M3 bolt. To make the tube piece strong I made the hole in the gear 
+        </p>
+        
+        <image src="photos-codes-videos/gear-specific-design/the-tube-in-the-gears.jpg"  width="400" height="600">
+
+        <p>
+          When I first cut the little hole it a kerf of 0.2mm so I cadded a piece with 8.2mm outer diameter os that it would become 7.8mm when cutted.
+          I never measured the diameter after the design change, but it perfectly in the gear with little woogle.
+        </p>
+        <image src="photos-codes-videos/gear-specific-design/little-hole-sketch.png width="400" height="600"></image>
+
+
+
+			</div>
+
+			<div class="col-4 border border-dark">
+				<image src="photos-codes-videos/gear-specific-design/making-little-gear.png" width="400" height="600"></image>
+
+        <p>
+          Besides choosing the little gear I had no specific design choices. To make the size of the gears same with the other gears
+          I've choosed a 10/30 module size. After that I changed the center circle's radius manually to 4.82mm so that the wooden rod can fit in.
+        </p>
+			</div>
+
+		</div><!--Row div finishes here-->
+	</div>
+
+  <h2> Design of Rods and other Support Structures</h2>
+  <p class="no-grid"> 
+    To make the rods cool ,also less hazardous to me while testing, I rounded the edges of the rods by fillets. Besides that I desgined a piece to support the little rod.
+    I origionally planned it to be directly underneath the main rod but to the available nuts it hanged a little under. This actually helped with the wooden rod as the hanging place 
+    allowed place for the wood to stay. On my original design there was a hole for the wooden-rod but then I thought it was unnecesary. However after I realized the hole would have
+    secured the wooden-rod I didn't have enough time to re-print the part and also test the system as a whole
+  </p>
+
+  <div class="container-fluid text-center">
+		<div class="row ">
+
+			<div class="col-4 border border-dark">
+        <image src="photos-codes-videos/non-gear-designs/little-rotator-sketch.png" width="400" height="600">
+          <p>
+            I had no specific requirements for the design of the little rod besides then it had to have a 4.82mm hole to support the wooden rod.
+            I choose 8cm by 2cm size because I wanted the peice to be  not small and big. While cad-ing it I had some problems with aplying fillets
+            that's why I aplied it to the 2 sides seperately. Here's a photo of the fillet.
+          </p>
+        <image src="photos-codes-videos/non-gear-designs/little-rotator-filelts.png" width="400" height="300"></image>
+			</div>
+
+
+			<div class="col-4 border border-dark">
+        <image src="photos-codes-videos/non-gear-designs/main-rotating-main-sketch.png" width="400" height="600">
+
+        <p>
+          For the main-rotating piece I spaced 60mm beetween holes for the gear. For the holes of the 3gears I just aplied a rectangular pattern. I've
+          given a 3.10mm diameter for the M3 bolts. I've choosed 3.10mm for some wiggle for the bolts but after printing them I realized it was a little too much.
+          When I put the bolts the nuts secured them so I didn't consider changin the 3.10mm diameter. Also I spaced a 40mm for the space beetween the main gear and the 
+          little gear and placed hole for the support structure
+        </p>
+
+        <image src="photos-codes-videos/non-gear-designs/main-rotating-holes-for-the-support.png" width="400" height="600">
+        
+        <p>
+          The holes for the bolts are placed unsymetric to the hole for the small gear. I could've spaced them evenly but I wanted them to have a little distance
+          that's why I placed them 18mm away. Also I tried to leave some distance beetween the edge of the main rod.
+        </p>
+        
+
+
+
+			</div>
+
+			<div class="col-4 border border-dark">
+				<image src="photos-codes-videos/non-gear-designs/support-sketch.png" width="400" height="600"></image>
+
+        <p>
+          The support sturcutre is there to have a support for the wooden rod. On the assembly of all the parts, I put some holes on the main rotating piece
+          and by rotating the gears in the assemvly I found places where the bolts didn't intefere with the gear. Then I just cadded a piece to that would be palced underneath it.
+        </p>
+        
+			</div>
+
+		</div><!--Row div finishes here-->
+	</div>
+
+  <dr>
+    <h2 class="left_aligned">Calculating the Resistance</h2>
+
+    <p>
+      Calculating the resistance was a little challenge for me as it was hard to put multimeter
+      ends to the wire but I did it. I used the power station to check wheather my calculation for current was correct or not.
+      I was a little off. For my voltage I asuumed it to be 5.0 because I was using the 5v pin to power my motor.
+    </p>
+
+    <div class="container-fluid text-center">
+      <div class="row ">
+  
+        <div class="col-4 border border-dark">
+          <image src="photos-codes-videos/circuitry/multimeter-photo.jpg" width="400" height="600">
+            <p>
+              A photo from the multimeter reading
+            </p>
+
+        </div>
+  
+  
+        <div class="col-4 border border-dark">
+          <image src="photos-codes-videos/circuitry/calculation.jpg width="400" height="600">
+  
+          <p>
+            Here's my terrible hand calculation. I did math via desmos
+          </p>
+  
+          <image src="photos-codes-videos/circuitry/" width="400" height="600">
+          
+          <p>
+            Here's me attaching the systems to the voltage machine
+          </p>
+          
+  
+  
+  
+        </div>
+  
+        <div class="col-4 border border-dark">
+          <image src="photos-codes-videos/non-gear-designs/support-sketch.png" width="400" height="600"></image>
+  
+          <p>
+            The support sturcutre is there to have a support for the wooden rod. On the assembly of all the parts, I put some holes on the main rotating piece
+            and by rotating the gears in the assemvly I found places where the bolts didn't intefere with the gear. Then I just cadded a piece to that would be palced underneath it.
+          </p>
+          
+        </div>
+  
+      </div><!--Row div finishes here-->
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		  
 
