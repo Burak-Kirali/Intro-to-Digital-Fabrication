@@ -73,3 +73,10 @@ pre
     text-align: center;
     font-size: 20px;
 }
+
+pre.code
+{
+    text-align: left;
+    background-color: white;
+    font-size: 16;
+}

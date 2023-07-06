@@ -20,8 +20,231 @@
 </nav>
 
 <body>
+  <h2>Burak's Hand Waiver Design</h2>
+  <p>
+    This week I had no idea what I was going to do. I originally planned something with the O-led display and my kinetic sculpture,
+    since by kinetic sculpture didn't finish I aboned that idea. I decided to do something with the RGB LED. Inspired by a the yes-no 
+    contraption at the lab I decided to just give random values(beetween 0 and 255) for red, green, and blue to the RGB LED. I thought that if I measure the current
+    of the annode of the RGB by analogRead, I would read different results as sometimes the random values all be low and a low current and other times the values will be 
+    high so a higher current. After setting reading the current I displayed on the serial monitor to see what kind of values ı was getting. I was either getting 0,
+    a number really close to 560, or some beetween 400-470. I've decided to have a servo that waive's a hand if the current is greater than 562 or less than 418.
+    Before adding the servo I used a red LED to test if my logic would work not. When it worked I've decided to keep it and it's still in the design. I drew my hand a thin card-board 
+    then cut it by scicosser than taped the servo motor to the back of it. Then I also taped the RGB LED to the front of it via some tapes. I unfortunately didn't record any 
+    videos of it. I couldn't find a way to represent servo-motor in circuit-diagrom.org. That's why I put as a M on the schematics.
+  </p>
 
-		  
+  <div class="container-fluid text-center">
+    <div class="row ">
+
+      <div class="col-4 border border-dark">
+        <image src="photos-cisuals/hand_photo.jpg" width="400" height="600">
+        <p>
+          Here's the hand that waive's with a command from my arduino
+        </p>
+      </div>
+
+
+      <div class="col-4 border border-dark">
+        <img src="photos-cisuals/schematic.png" width="400" height="600">
+        <p>
+          Here's a schematic of the my arduino. I have 3 pins(pin,3,5,6 which connect to the red,green,and blue parts of LED, respectively). I've choosen These
+          pins because they are PWM pins. I take the cathode pin of the RGB LED and connect it to the breadbord then I connect it tthrough 1k resistors then connecting
+          the resistor the main line that runs for the ground pin. Also before connecting the LED to the resistor I have cable that directs
+          the electricity to A5 the pin I use the measure the current coming through the cathode of the LED. I use this reading 
+          to decide wheather ı should waive the hand or not.  I use pin2, to light the single red LED on and off. I didn't need any PWM so I just choosed pin 2. I connect the negative end of
+          the LED to another 1k resistor which then also connects to the line for the ground pin. I use pin9, and 5V to power the servo-motor. For the other parts of the 
+          curciut I didn't need any constant voltage suply so I just connect the 5v voltage to the servo motor and connect a cable that also runs to the main line for the ground pin.
+          In my actual design to extend the cables for the RGB LED I used 2 socket-pin cables and attached them togetehr so that they beahevd as one cable.
+        </p>
+      </div>
+
+      <div class="col-4 border border-dark">
+        <img src="photos-cisuals/connecting-cables-to-arduino.jpg" width="400" height="600">
+        <p>
+          Here's a picture my messy cables.
+        </p>
+      </div>
+
+    </div><!--Row div finishes here-->
+  </div>
+
+  <p>
+    Here's the code snippet for setting up the variables. I'm using servo so I'm dowloading their library. Then I'm setting up
+    all the variables for the pins, the numbers to get the random values for red,green,and blue. And finally the variables that determine
+    wheather the servo will waive the hand or not on a given turn.
+  </p>
+  <pre class="code"> 
+      <font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">Servo</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+      
+      <b><font color="#d35400">Servo</font></b> <font color="#000000">servo1</font><font color="#000000">;</font>
+      
+      <font color="#00979c">int</font> <font color="#000000">servo_pin</font><font color="#434f54">=</font><font color="#000000">9</font><font color="#000000">;</font>
+      
+      <font color="#434f54">&#47;&#47;Some helper pin</font>
+      <font color="#00979c">int</font> <font color="#000000">current_pin</font><font color="#434f54">=</font><font color="#000000">A0</font><font color="#000000">;</font>
+      <font color="#00979c">int</font> <font color="#000000">red_LED_pin</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+      
+      <font color="#434f54">&#47;&#47;PinMode&#39;s for the rgb LED</font>
+      <font color="#00979c">int</font> <font color="#000000">max_extreme_limit</font><font color="#434f54">=</font><font color="#000000">562</font><font color="#000000">;</font>
+      <font color="#00979c">int</font> <font color="#000000">min_extreme_limit</font><font color="#434f54">=</font><font color="#000000">418</font><font color="#000000">;</font>
+      
+      <font color="#00979c">int</font> <font color="#000000">red_pin</font><font color="#434f54">=</font><font color="#000000">3</font><font color="#000000">;</font>
+      <font color="#00979c">int</font> <font color="#000000">green_pin</font><font color="#434f54">=</font><font color="#000000">5</font><font color="#000000">;</font>
+      <font color="#00979c">int</font> <font color="#000000">blue_pin</font><font color="#434f54">=</font><font color="#000000">6</font><font color="#000000">;</font>
+      
+      <font color="#00979c">int</font> <font color="#000000">random_red</font><font color="#000000">;</font>
+      <font color="#00979c">int</font> <font color="#000000">random_green</font><font color="#000000">;</font>
+      <font color="#00979c">int</font> <font color="#000000">random_blue</font><font color="#000000">;</font>
+  </pre>
+
+  <hr>
+
+  <p>
+    On my setUp I set the pin's up and call the specific function for the Servo-motor. The reason is that ones the program starts running
+    I want to hold the motor in a specific way so I'm making the servo turn 0,180, and 90°. I've seperated that with servo-setup code. I also
+    open the serial monitor for test-related reasons.
+  </p>
+
+  <pre class="code">
+    <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+     &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">red_LED_pin</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">red_pin</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">green_pin</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">blue_pin</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">current_pin</font><font color="#434f54">,</font><font color="#00979c">INPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+     &nbsp;<font color="#000000">servo_setup</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    </pre>
+    <hr>
+
+    <p>
+      On the servo-setup code, ı set the servo up. Then I turn to 0° then 180° in quick moves. This is just to show me that the servo-is setting-up and
+      time for to hold in the correct orientation. I want the hand to be vertical on 90° so that the hand move can look symetrical. The delays here are just personal preference.
+    </p>
+
+    <pre class="code">
+      <font color="#00979c">void</font> <font color="#000000">servo_setup</font><font color="#000000">(</font><font color="#000000">)</font>
+      <font color="#000000">{</font>
+       &nbsp;<font color="#000000">servo1</font><font color="#434f54">.</font><font color="#d35400">attach</font><font color="#000000">(</font><font color="#000000">servo_pin</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;<font color="#000000">servo1</font><font color="#434f54">.</font><font color="#d35400">write</font><font color="#000000">(</font><font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">500</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">servo1</font><font color="#434f54">.</font><font color="#d35400">write</font><font color="#000000">(</font><font color="#000000">180</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">500</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;<font color="#434f54">&#47;&#47;giviing 4.5 seconds so that I attach the servo in correct oriontation</font>
+       &nbsp;<font color="#000000">servo1</font><font color="#434f54">.</font><font color="#d35400">write</font><font color="#000000">(</font><font color="#000000">90</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">4500</font><font color="#000000">)</font><font color="#000000">;</font>
+      <font color="#000000">}</font>
+    </pre>
+
+    <hr>
+
+    <p>
+      The loop happens every 400ms. It creates random numebrs for RGB and set's the LGB LED accordingly. Then it reads the value passing throught the cathode end.
+      When testing although the light was lighting the reading sometimes had a value of 0, it occurs somewhat common that I re-assign the value if that's the case.
+      Then there is some code for printing to serial-monitor for test-related reasons. Then code decides wheather the reading is "extreme" or not. If it's in beetween
+      the range I've set-up it's not extreme otherwise it's extreme. When it's not extreme I just cut the electricity to the red LED light on the breadboard. If the reading
+      is extreme it light's the LED and waive's the hand.
+    </p>
+    <pre class="code">
+      <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+       &nbsp;<font color="#000000">random_red</font><font color="#434f54">=</font><font color="#d35400">random</font><font color="#000000">(</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">240</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">random_green</font><font color="#434f54">=</font><font color="#d35400">random</font><font color="#000000">(</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">240</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">random_blue</font><font color="#434f54">=</font><font color="#d35400">random</font><font color="#000000">(</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">240</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;<font color="#000000">turn_rgb</font><font color="#000000">(</font><font color="#000000">random_red</font><font color="#434f54">,</font> <font color="#000000">random_green</font><font color="#434f54">,</font> <font color="#000000">random_blue</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;<font color="#00979c">int</font> <font color="#000000">current</font><font color="#434f54">=</font><font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">current_pin</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">current</font><font color="#434f54">==</font><font color="#000000">0</font><font color="#000000">)</font><font color="#434f54">&#47;&#47;A 0 current means there&#39;s some problem with the cable and during testing I sometimes read 0 although the LED was lighting</font>
+       &nbsp;&nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">current</font><font color="#434f54">=</font><font color="#d35400">random</font><font color="#000000">(</font><font color="#000000">420</font><font color="#434f54">,</font><font color="#000000">580</font><font color="#000000">)</font><font color="#000000">;</font> 
+       &nbsp;&nbsp;<font color="#000000">}</font>
+      
+       &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;current through LED is &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">current</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;min and Max are:&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">max_extreme_limit</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font> <font color="#000000">current</font><font color="#434f54">&lt;</font> <font color="#000000">max_extreme_limit</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">current</font><font color="#434f54">&gt;</font><font color="#000000">min_extreme_limit</font><font color="#000000">)</font>
+       &nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">red_LED_pin</font><font color="#434f54">,</font><font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;
+       &nbsp;<font color="#000000">}</font>
+       &nbsp;<font color="#5e6d03">else</font><font color="#000000">{</font><font color="#434f54">&#47;&#47;in the extreme</font>
+       &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">red_LED_pin</font><font color="#434f54">,</font><font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">waive_hand</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">}</font>
+      
+       &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">400</font><font color="#000000">)</font><font color="#000000">;</font>
+      <font color="#000000">}</font>
+      </pre>
+
+      <hr>
+      <h2> Here are the codes for lighting the RGB LED, and waiving hand</h2>
+      <div class="container-fluid text-center">
+        <div class="row ">
+    
+          <div class="col-6 border border-dark">
+ 
+            <pre class="code">
+              <font color="#00979c">void</font> <font color="#000000">turn_rgb</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">red</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">green</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">blue</font><font color="#000000">)</font>
+              <font color="#000000">{</font>
+               &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">red_pin</font><font color="#434f54">,</font> <font color="#000000">red</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">green_pin</font><font color="#434f54">,</font> <font color="#000000">green</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">blue_pin</font><font color="#434f54">,</font> <font color="#000000">blue</font><font color="#000000">)</font><font color="#000000">;</font>
+              <font color="#000000">}</font>
+              </pre>
+
+              <p>
+                The code for the RGB LED is self explanatory, the reason I created was that it would make my code more readable.
+              </p>
+          </div>
+    
+          <div class="col-6 border border-dark">
+            <pre class="code">
+              <font color="#00979c">void</font> <font color="#000000">waive_hand</font><font color="#000000">(</font><font color="#000000">)</font>
+              <font color="#000000">{</font>
+               &nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">angle</font><font color="#434f54">=</font><font color="#000000">45</font><font color="#000000">;</font>
+               &nbsp;&nbsp;<font color="#000000">servo1</font><font color="#434f54">.</font><font color="#d35400">write</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;&nbsp;
+               &nbsp;&nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&lt;=</font><font color="#000000">18</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font> 
+               &nbsp;&nbsp;<font color="#000000">{</font>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">angle</font><font color="#434f54">+=</font><font color="#000000">5</font><font color="#000000">;</font>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">servo1</font><font color="#434f54">.</font><font color="#d35400">write</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">15</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;&nbsp;<font color="#000000">}</font>
+               &nbsp;
+               &nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">60</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;&nbsp;
+               &nbsp;&nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">18</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&gt;=</font><font color="#000000">1</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">--</font><font color="#000000">)</font> 
+               &nbsp;&nbsp;<font color="#000000">{</font>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">angle</font><font color="#434f54">-=</font><font color="#000000">5</font><font color="#000000">;</font>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">servo1</font><font color="#434f54">.</font><font color="#d35400">write</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">15</font><font color="#000000">)</font><font color="#000000">;</font>
+               &nbsp;&nbsp;<font color="#000000">}</font> 
+              <font color="#000000">}</font>
+              </pre>
+            <p>
+              In my waiving hand is just the hand rotating some degress then reversinf those rotations. I wanted the hand-waive to look like humans that's why
+              the hand moves from 45° to 135° then again to 45°. I turned the servo to 45° waited then 135° waited more, then 45°; it wouldn't have
+              mimic the hand move the humans because it rotates fast. Instead I divide the process into 18, 5° rotations seperated by 15ms. Because the delay is short,
+              the movement mimics that of a human hand-move.
+            </p>
+          </div>
+    
+        </div><!--Row div finishes here-->
+      </div>
+    
+
+
 
 </body>
 
