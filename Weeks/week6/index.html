@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<title>PS70: Intro to Digital Fabrication </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../style.css" rel="stylesheet">
+<link href="../../buraks-custom.css" rel="stylesheet">
+
+  
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Intro to Digital Fabrication</h3>
+    <div class="navbar-nav">
+      <h4><a class="nav-link" href="../../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../../about-page/index.html">About</a></h4>
+	  <h4><a class="nav-link" href="../../final-project-documentation /index.html">Final Project Documentation</a> </h4>
+    </div>
+  </div>
+</nav>
+
+<body>
+    <h2>The Reliable and Unreliable Light Sensor</h2>
+    <p>
+        In my basktabll project with my friend we're planning a sensor that detecs wheather the ball passed through the net or not. To do this we though of using a light sensor with tube attached
+        to it(the tube block lights coming from other places and allows a narrow angle to reach it). I first tested my idea with 1 light resistor. I created a classic voltage divider
+        curciut with I guess 10kohm resistor and did some basic testing to make sure that the resistor was responding to light. I displayed my analogReads on the serial monitor. After some basic testing
+        I have a cut a little rectangle from the black card-board and made a little tunel for resistor so that I block most of the light from other angles and only allow light near 90° to come in.
+        During this testing I put the resistor horizontaly and simply moved my hand closer' and away from it testing how it responded. I also had a ruler so that I can see how far my hand was away from the ruler.
+        In these testing I found that the shadow of my arm hovering the resistor, a person's shadow, how much the surface reflected light affected the readings on the resistor.
+        <br>
+        After experimenting with these, I decided to test range of the resistor. What I was trying to do was see a range of values where I can easily distinguish from the reading with no object infront of it.
+        During these testing I realized that the light sensor is unreliable(I already knew from the it's documentation). It read 400 when there were no objects than 900 when I put my hand on it
+        then 375 when I took it back then 425 while there was nothing on top of it. So I can confidently say that the light sensor reads X when there's no object infront of it.
+        However when an object is placed or it distance is changed( and this objects is in the range of the sensor) by change in the values I can detectwheather objects went away or closer to the sensor.
+        The wild nature of the transistor was also apparent when I was trying it on it's near-maximum range(I found this number to be 10cm but probally varies by somewhat) For example it read 400 when no object infront
+        425 when a object is palced 10cm away then 417 when taken and suddenly jumping to 437 for no reason. So just by looking at the numbers it would be hard to find the distance of the object 
+        if it's not too close. On our final project we'll have to detect the basketball ball going through the hoop which we'll se as a spike so our set-up should work. However we have the sensor with actual basketball going down at
+        10m/s.
+        <br>
+        During the test with single light resistor I found the maximum distance(the maximum distance I was able to identify by change in numbers) was around 10cm which is too short for our requirements.
+        It should work at least in the range of 15-30cm achieve our goal. Inspired by a yt video I watched,in which a guy uses multiple supersonic sensors to increase the devices range, 
+        I've decided to put 4 of the light resistors in a square grid and connect them in series. The way I connected was I put 2 thermoresister together and twisted the wires on the middle and taped the twisted part.
+        After that I aligned the resistors so they were on roughly the same height and taped all parts of the cable's that were connected so that other cables didn't distrupt the parelel connection.
+        I did the same thing for another 2 thermo resistor's. Then I connected 1 of the 2 open wires of resistor pair in the same way and also taped the connected cables. Then I made sure the 2 resistor pairs were aligned
+        put tape near the head of the resistors so it stayed together. I just had 2 open wires left which I used aligator clips to connect to my curcuit.
+    </p>
+
+
+  <div class="container-fluid text-center">
+    <div class="row ">
+
+      <div class="col-6 border border-dark">
+        <image src="photos_graphs(light resistor)/twisting_the_wires.jpg" width="400" height="600">
+        <p>
+          Here's the twisting of 2 close wires before taping
+        </p>
+      </div>
+
+
+      <div class="col-6 border border-dark">
+        <image src="photos_graphs(light resistor)/taping_the_wires.jpg" width="400" height="600"></image>
+        <p>
+          A final version of a taped connection. I do something very similar for connecting the 2 resistor pairs
+        </p>
+      </div>
+
+    </div><!--Row div finishes here-->
+  </div>
+
+  <h2>The Black Tube and Placing the Resistor's in it.</h2>
+
+  <p>
+    Just putting 4 light resistor doesn't make a sensor that can detect an object (detect changes in light level) that's 30cm far ,as light comes from many directions.
+    If I put a tube infront of the resistor grid, the tube will tube block of the most of light coming and only allow light coming from near-direct angles. To make sure 
+    that only near-direct light reaches the resistor I used a black card-board I found on the lab and tried to cut a rectangular piece. I didn't measure it's size so I can't give
+    but from my rough estimates it's at least 6cm long. After cutting the rectangle I bent around the grid and made a tube. Then I used a masking tape to secure. While making the 
+    tube I first made a big hole that the grid can easily go in and out from. Then I slowly narrowed until it just stayed there. I don't use anything to secure the light resistors in to the tube.
+    There are 2 open cables that for the ground and 5v. it doesn't matter which one I attach to the ground and which one to the 5V. The only  thing is that to avoid the 2 cables 
+    connecting I bent them in opposite direction and attached the allegetor cables like that. Some part of the wires of the resistor's is also in the tube but I don't know how 
+    much as I simply didn't measure.
+    <br>
+    To measure the limit of the resistor, I made a brown clay ball to mimick a basket-ball(it's smaller than a basketball ball obviously). I just did it by getting some
+    clay and made a spherish shape. Then I put the tube down but tilted a little up due to the aligator clips. To fix this, I took a arduino-board-holder and taped the tube on the 
+    flatter side of the holder. This way the tube was placed horizontal. Then with squihing the tube by my hand I the rough spot of the resistors. I put a ruler starting from the rough spot.
+    This way I able to measure the distance of the object to the sensor(not the edge of the tube) to a value that's a multiple of the voltage across the light resistors.
+    From my rough location of the resistor's I think there's 4.6cm length tube infront of the resistor's. I put the ball really close to the tube(roughly 4.6cm) and measured the arduino 
+    reading. Then at each subsequent even number distance(6cm,8cm,10cm....) I put the ball and measured the distance until 30cm which was the length of ruler. I still get
+    identifiable data around 30cm and could've continued but stopped. I except the sensors can sense object that maximum 34-36cm direct away from them 
+  </p>
+
+  <div class="container-fluid text-center">
+    <div class="row ">
+
+      <div class="col-6 border border-dark">
+        <image src="photos_graphs(light resistor)/taping_to_the_holder.jpg" width="400" height="600">
+        <p>
+          Here's a semi-clear picture of taping the tube sturcutre to the arduino-board holder
+        </p>
+
+      </div>
+
+
+      <div class="col-6 border border-dark">
+        <image src="photos_graphs(light resistor)/seeing_the_lights_sensors.jpg" width="400" height="600"></image>
+        <p>
+          In here I'm shining the I-phone's flashlight in to the sensor's so they're visible. They are not perfectly aligned but their current
+          state suits my purpose.
+        </p>
+      </div>
+
+    </div><!--Row div finishes here-->
+  </div>
+
+
+  <h2> Electronic Design and the Ohm Monster</h2>
+
+  <p>
+    When I read the datasheet for the resistor's it stated the data coming varied alot(yep it did) and it had a range of 10k-200kohm resistance(I thing I broke those numbers).
+    During my inital testing with the single light resistor I used a 10k ohm resistor caused Nathan suggested that. On my design I have a constant resistor, than the resistor
+    and I read the voltage beetween the constand light resistors. When I decided to do a 4 resistor set-up, ebcause ı put them in series I assumed a 50k ohm voltage will help
+    me and on my initial design I used it. That's why I used a 47k ohm resistor I found on the lab. Here's the schematic of my deisgn(the resistor values do not reflect actual
+    resistance of the resistors)
+
+    <image src="photos_graphs(light resistor)/initial_curcuit_schematic.png" width="750" height="1000">
+
+    With the current way I'm reading if I read a high value it means the resistance of the thermoe resistor's are gretaer than the fixed resistance. During testing when I was just using
+    100k ohm fixed resistor I found out that even nothing was close to the sensor I still got reading int he 900's range which meant that there was big resistance in the light resistor's. 
+    To have a bigger range of values I changed the 100k to a 1m ohm resistor and it made promise now I was getting values around 750 for no object but I wanted to increase more so connected 2
+    1m ohm resistor's series(practicaly making them 2m ohm) and with this I was getting values from 350 to 1000 and reaching 1000 or more needed some series closement of the tube. 
+    In the datasheet it states the range from 10k-200k and I was getting at least 175 kohm per light resistor when nothing was infront and some big number if I put something infront.
+    Just for I force the clay ball to close the tube's face and when I used the multimeter even the 200M ohm version couldn't read. Practically speakign when an object is really close
+    like (4.7cm, 0.1cm away from the tube) I get resistance in 10's of milions although I haven't tested this properly. Here's a photo of the a 22M ohm reading
+    notice that the multimeter is on the 200M ohm setting. 
+
+ 
+    <image src="photos_graphs(light resistor)/22M_ohm_monster.jpg" width="750" height="1000">
+
+    It was fun playing around with these big resistor values.
+
+  </p>
+
+
+  <hr>
+    <h2> Coding to get Result's</h2>
+  <hr>
+
+  <p>
+    On my coding side there isn't that much of hard or a technical thing, I have simple task of reading from A0(the analog sensor I choose) and displaying on the screen. 
+    During initial testing succisive sensor values varied and were jumping up and own. for example 170, then 168,19,165,171 etc. To smooth these out and also have data speed
+    that I can udnerstand I created a function to take averages of n reading(the function takes n as a input does the sampling accordingly).
+  </p>
+
+  <pre class="code">
+      <font color="#00979c">float</font> <font color="#000000">take_average_reading</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">n</font><font color="#000000">)</font>
+      <font color="#000000">{</font>
+       &nbsp;<font color="#00979c">float</font> <font color="#000000">reading_sum</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+       &nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">n</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font>
+       &nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">reading_sum</font> <font color="#434f54">+=</font><font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">A0</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">2</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">}</font>
+      
+       &nbsp;<font color="#5e6d03">return</font> <font color="#000000">reading_sum</font><font color="#434f54">&#47;</font><font color="#000000">n</font> <font color="#000000">;</font>
+      <font color="#000000">}</font>
+      
+  </pre>
+
+  <p> 
+    I've choosen float as my data type as it makes sense for avarage of sampling to be a decimal. I also give a 2ms delay beetween each sensor reading. My general code 
+    is built on top of the arduino's basis analogRead example. I simply added "take_average_reading" function to it. While I was taking measurements, the data had to come in a speed
+    that I can read and shouldn't contain a lot of fluctutions. For this I take avarage of 150 readings and recorded that(as you can see in the code snippet below)
+
+  </p>
+
+  <pre class="code">
+    <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+     
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    
+    
+    <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+     &nbsp;
+     &nbsp;<font color="#00979c">float</font> <font color="#000000">voltage</font><font color="#434f54">=</font><font color="#000000">take_average_reading</font><font color="#000000">(</font><font color="#000000">150</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">voltage</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+
+    </pre>
+
+  <h2> My Data</h2>
+  <p>
+    As I said before I placed the clay ball really close to the tube(roughly 4.6cm away from sensors) and the placed it even number away from the sensors(6,8,10cm etc.) While
+    testing I had my 2M ohm constant resistor's set-up so that I can get a big range of values. Also the readings I get were influenced by the lab's light level and the light reflected
+    by the table as some light also reached the sensors.
+  </p>
+
+  <div class="container-fluid text-center">
+    <div class="row ">
+
+      <div class="col-6 border border-dark">
+        <image src="photos_graphs(light resistor)/data_table.png width="400" height="600">
+        <p>
+          Here's my data table. Altough the avarage values I saw were float's and had 2 decimal points, data coming
+          every 300ms was still hard for me to read those decimal values. That's I simply ğput the integer values I saw
+        </p>
+      </div>
+
+
+      <div class="col-6 border border-dark">
+        <image src="photos_graphs(light resistor)/graph_of_data.png" width="400" height="600"></image>
+        <p>
+          Here's the graph of my data
+        </p>
+      </div>
+    </div><!--Row div finishes here-->
+  </div>
+
+
+  <p>
+    When the clay ball is close to the tube it block nearlly all light coming in and light resistor's have a big resistances.
+    As the ball moves away from the tube it blocks less of the light away and the voltage values decreases accordingly.
+    As the ball moves away the distance change's effect becomes less and less, around 30-35cm(altough I haven't tested any value above 30cm) 
+    it the sensors are no longer able to detect those changes. These ideas are reflected in tne data as well. The change in the value is bigger
+    whent he ball is closer(like the difference beetween readings from 6cm and 8cm) while it's becomes less and less as we go farther away(like the difference
+    beetween 28cm and 30cm distance).
+    <br>
+    The size of the object has an important role in these values. If it's bigger it'll block more light and the sensor might detect it fruther away
+    while smaller obejct like marble's will be harder to detect as they obsturct less of the light. Also factor's like the general lighting in the room
+    and how reflective the object is will also effect the range of the object. With my observation from the clay ball the maximum value I'll see is 1023 reading
+    (because of the limit of analog read on arduino) and I'll reach this very close 4.6cm. After some distance to tube like 0.1mm till the tube start the sensor's
+    won't be able to detect the changes, but the sensor is not designed for this kind of a requirement. Depending on the lighting of a room and the shape and size of an object
+    the sensor will have around at least 25cm range of detection
+    </p>
+
+
+
+
+</body>
+
+<script src="./strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>
+
+
+
+
