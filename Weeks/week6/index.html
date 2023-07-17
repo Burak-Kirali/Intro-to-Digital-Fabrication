@@ -251,6 +251,137 @@
       <a href="#light-sensor"class="in-page-link">Light Sensor</a>
     <hr>
 
+    <p> 
+      On the class Nathan showed some tilt sensors and after that I wanted to make a 2 axis-til sensor. To do that I had an idea of putting 2, 2-pairs of coper tape on
+      the bottle and each pair serving as a capacative sensor for an axis. However I realized this would've crate some problems as when I power the X-axis's coper tabe
+      the coper-tabe for the Y-axis's would also get charged. Then I aproached Nathan and he gave me the idea putting 2 bottle's together and each measuring the one axis.
+      Besides 2-axis I also wanted my sensor to able to measure at least from vertical to horizontal which means I needed a container that had a smaller opening on the top 
+      compared to the bottom to store the water. I only found 1 one of these cups on the maker-space and ditched my idea of 2-axis. Also the hours I wasted on trying to put an allegetor
+      clip on coper wires meant I had no time to implement my idea. Here's a hand drawn sketch of me trying to write why a cap was needed to measure near-horizontal angles.
+
+      <image src="capacitve_photos/Hand-writing-of-using-a-cap.jpg" width="750" height="1000">
+      
+      While I was puttingn water on the bottle I tried to make sure that the water level  reached the copper-tapes while also not spilling out when placed horizontally on the table. 
+      Here's a photo that tries to explain this.
+      <image src="capacitve_photos/explaining_how_much_water_I_put.jpg" width="750" height="1000"></image>
+
+      I first made my design with a plastic cup I found on the lab. I cut some copper wire, put them close to each other, run the example code from the website and saw the data.
+      I just did it so to test that as the area of the water changed on the copper wire my readings chnaged(it worked as I tilted more to the copper-tape side the readings increased).
+      While testing with the cup I realized that due to how water stays horizontal compared to the shape of the water bottle it was becoming hard to see the differences on near-limit angles
+      (on the plastic cup I couldn't do horizontal but as I reached it's limiting angle, the angle when water will spill, it become harder to see the differences). This was due to the circular shape
+      and the wide copper-tapes. After that I decided to use really thing tapes so that I can mitigate this effect. Here's me trying to explain this.
+
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/sU6UiUHfUtk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+    </p>
+
+    <h3>Wasting Hours to Take a Reading</h3>
+    <p>
+      After I observed that due to the geometry of the circular design, it was harder to distinguish value near horizontal. I decided to put the thin copper tape I found on the lab 
+      and atteched it to the water-container. After that I started doing some experimentation with numbers and realized because the surface was low the range of values I was
+      getting went from 200-500 range to 150-300. I was fine with this and tried to measure the angle and the value I got(I'll explain my data measurement set-up later). On my testing
+      I attach allegetor clips to the tape and these clips allways torn while I was testişng with thin-wire. I tried a lot of things but in the end wasted 3-4hours trying for the allegetor
+      clips to stick to the tape. When I realized I couldn't continue with the thin-wires I took them of and put some wider ones and was oble to measure the angle vs analogRead values
+      without a lot of problem. With this said I think if there's a way to physically amplify the readings and also have tubes whose height/radius is high, the sensors would become more precise.
+      Also to solve the width problem and the curvature problem I thought about using a square or a rectangular design but never tested it.
+    </p>
+
+    <div class="container-fluid text-center">
+      <div class="row ">
+  
+        <div class="col-6 border border-dark">
+          <image src="capacitve_photos/thin-cooper-wire.jpg" width="400" height="600">
+          <p>
+            Here's the thin-tape I used that caused me a lot of trouble
+          </p>
+  
+        </div>
+  
+  
+        <div class="col-6 border border-dark">
+          <image src="capacitve_photos/the-tube.jpg" width="400" height="600"></image>
+          <p>
+            Here's the tube I used to make measurements with the new more wider tapes I added. As I tried to illustrate above the tapes goes all the way to the top so that 
+            I can measure all angles to 90°
+          </p>
+        </div>
+  
+        
+  
+      </div><!--Row div finishes here-->
+    </div>
+
+    <h3>Data Collection</h3>
+    <p>
+      After I had my sensor and getting data matched my expectations, it was time for me to collect data. Besides wasting hours on attaching an allegetor clip to thin tape I had no major problems.
+      I had 2 ideas on how I can measure angle to analogRead, the first one was to attach MPU6050 IMU on the bottom of the water-tube and use it's gyrsocpoes. However I learned that the sensor
+      gave measurements of angular velocity and not rotation, altough I could've converted velocity into angles turned I decided to not do that as the sensor's imprecision's will add up and it was hard for me 
+      to measure time(this path would've lead me to integral's). My 2nd(which I used for data measurement) was to use a angle meaurer and draw some lines representing some angles.
+      The way I did was that I put an angle measurer on the big white-board and put dot's on every 10° starting from right horizontal angle. After that I extended these dots to make lines. 
+      Here's a photo explaining for convinience I didn't put all the 15 dots on the paper for the 0°-140° range but on the white-board I did.
+      <image src="capacitve_photos/explaining_how_I_put_angles.jpg" width="750" height="1000"></image>
+
+      I also put a dot on the center of the angles so I can have a pivot point to rotate the tube around. After all of this I moved a table right on the white-board and put computer there.
+      My dots were a little hjigh and all of my electronics were connected to my computer so I had to move tube easily withput disxonnecting it from my computer.
+      There was a white box that hold chalks in it, which also is magneted to the black-board. I put a board-eraser on top of it to make a flat surface for my tube.
+      After that I aligned the top of the eraser with the pivot point I marked so that I asily turn the tube. Here's a set-up with the box and the eraser.
+      <image src="capacitve_photos/set_up_photo.jpg" width="750" height="1000"></image>
+
+      It was hard for me while data collecting to hold the tube in a fixed plac,e read data from my computer and also write the data on to the board so that I can transfer later. I was reading
+      data from my computer which were an average of 25 tries. Trying to get data was a little hard as hands touching the copper wire or tilting the tube on any axis that the tape's weren't on caused problems.
+      That's why I got help from my friends and they've rotated the bottle every line and I recorded their readings. On my set-up 0° was positive x axis and the angles went counter-clokwise. 
+      Here are a couple of photos from my data collection.
+    </p>
+
+    <div class="container-fluid text-center">
+      <div class="row ">
+  
+        <div class="col-6 border border-dark">
+          <image src="capacitve_photos/me-holding-bottle-for-collection.jpg width="400" height="600">
+          <p>
+            Although when I recorded the data my friends hold the bottle, they did the same thing as this photo. They started from 0° then
+            went to 140° where roughly the water started to not touch the copper wires.
+          </p>
+  
+        </div>
+  
+  
+        <div class="col-6 border border-dark">
+          <image src="capacitve_photos/data-table.jpg" width="400" height="600"></image>
+          <p>
+            Here's the data table I recorded with my horrible hand writing.
+          </p>
+        </div>
+
+      </div><!--Row div finishes here-->
+    </div>
+
+    <h3>Electronics</h3>
+    <p>
+      There is no specfic thing I did on my electronics. I used pin 2 as the Tx pin and A0 as the analogRead pin. I put the socket-to socket wires and attached one of the socket wire
+      to the sensor via the allegetor clips.
+    </p>
+    <h3>Coding</h3>
+    <p>
+      To get readings I used the example code from the courses website. Each data obviously varied from each other and like what I did with my light sensor,
+      I created a take_average method and recorded my data with average of 25.
+    </p>
+
+    <pre>
+      <font color="#00979c">float</font> <font color="#000000">take_average</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">n</font><font color="#000000">)</font>
+      <font color="#000000">{</font>
+       &nbsp;<font color="#00979c">float</font> <font color="#000000">sum</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+      
+       &nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">n</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font>
+       &nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">sum</font><font color="#434f54">+=</font><font color="#000000">read_sensor</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">}</font>
+       &nbsp;<font color="#5e6d03">return</font> <font color="#000000">sum</font><font color="#434f54">&#47;</font><font color="#000000">n</font><font color="#000000">;</font>
+      <font color="#000000">}</font>  
+      </pre>
+    <h3>Data Analysis</h3><!--Mention the derivates and how the rate changes.-->
+
 
 
 
