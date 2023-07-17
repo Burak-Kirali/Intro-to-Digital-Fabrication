@@ -154,7 +154,7 @@
 
 
   <hr>
-    <h2> Coding to get Result's</h2>
+    <h2 id="ligh-sensor-code"> Coding to get Result's</h2>
   <hr>
 
   <p>
@@ -337,7 +337,7 @@
       <div class="row ">
   
         <div class="col-6 border border-dark">
-          <image src="capacitve_photos/me-holding-bottle-for-collection.jpg width="400" height="600">
+          <image src="capacitve_photos/me-holding-bottle-for-collection.jpg" width="400" height="600">
           <p>
             Although when I recorded the data my friends hold the bottle, they did the same thing as this photo. They started from 0° then
             went to 140° where roughly the water started to not touch the copper wires.
@@ -364,23 +364,98 @@
     <h3>Coding</h3>
     <p>
       To get readings I used the example code from the courses website. Each data obviously varied from each other and like what I did with my light sensor,
-      I created a take_average method and recorded my data with average of 25.
+      I created a take_average method and recorded my data with average of 25. Here's the code for my take_average method. It's logic is really similar to my logic for my light sensor.
+      <a  href="#light-sensor-code" class="in-page-link">Rotation Sensor</a>
     </p>
+    <div class="container-fluid text-center">
+      <div class="row ">
+  
+        <div class="col-4 border border-dark">
+          <h3>The code for Reading the Sensor</h3>
+          <pre class="code">
+            <font color="#00979c">int</font> <font color="#000000">read_sensor</font><font color="#000000">(</font><font color="#000000">)</font>
+            <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">tx_pin</font><font color="#434f54">,</font><font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Step the voltage high on conductor 1.</font>
+             &nbsp;<font color="#00979c">int</font> <font color="#000000">read_high</font> <font color="#434f54">=</font> <font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">rx_pin</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; Measure response of conductor 2.</font>
+             &nbsp;<font color="#d35400">delayMicroseconds</font><font color="#000000">(</font><font color="#000000">100</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#434f54">&#47;&#47; Delay to reach steady state.</font>
+             &nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">tx_pin</font><font color="#434f54">,</font><font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Step the voltage to zero on conductor 1.</font>
+             &nbsp;<font color="#00979c">int</font> <font color="#000000">read_low</font> <font color="#434f54">=</font> <font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">rx_pin</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; Measure response of conductor 2.</font>
+             &nbsp;<font color="#00979c">int</font> <font color="#000000">diff</font> <font color="#434f54">=</font> <font color="#000000">read_high</font> <font color="#434f54">-</font> <font color="#000000">read_low</font><font color="#000000">;</font> 
+            
+             &nbsp;<font color="#5e6d03">return</font> <font color="#000000">diff</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            </pre>
 
-    <pre>
-      <font color="#00979c">float</font> <font color="#000000">take_average</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">n</font><font color="#000000">)</font>
-      <font color="#000000">{</font>
-       &nbsp;<font color="#00979c">float</font> <font color="#000000">sum</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
-      
-       &nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">n</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font>
-       &nbsp;<font color="#000000">{</font>
-       &nbsp;&nbsp;&nbsp;<font color="#000000">sum</font><font color="#434f54">+=</font><font color="#000000">read_sensor</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
-       &nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font>
-       &nbsp;<font color="#000000">}</font>
-       &nbsp;<font color="#5e6d03">return</font> <font color="#000000">sum</font><font color="#434f54">&#47;</font><font color="#000000">n</font><font color="#000000">;</font>
-      <font color="#000000">}</font>  
-      </pre>
+            <p>
+              This code is near identical to code in the
+            </p>
+
+            <a href="https://nathanmelenbrink.github.io/intro-dig-fab/06_input/index.html">courses website</a>
+        </div>
+  
+        <div class="col-4 border border-dark">
+          <h3>Here's the Code for Taking the Averages</h3>
+          <pre class="code">
+            <font color="#00979c">float</font> <font color="#000000">take_average</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">n</font><font color="#000000">)</font>
+            <font color="#000000">{</font>
+             &nbsp;<font color="#00979c">float</font> <font color="#000000">sum</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+            
+             &nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">n</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font>
+             &nbsp;<font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">sum</font><font color="#434f54">+=</font><font color="#000000">read_sensor</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#000000">}</font>
+             &nbsp;<font color="#5e6d03">return</font> <font color="#000000">sum</font><font color="#434f54">&#47;</font><font color="#000000">n</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            </pre>
+          
+        </div>
+
+        <div class="col-4 border border-dark">
+          <h3> Here's thge Code for Set-up and Loop</h3>
+          <pre class="code">
+            <font color="#00979c">int</font> <font color="#000000">tx_pin</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+            <font color="#00979c">int</font> <font color="#000000">rx_pin</font><font color="#434f54">=</font><font color="#000000">A0</font><font color="#000000">;</font>
+            
+            <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">tx_pin</font><font color="#434f54">,</font><font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+            
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#00979c">float</font> <font color="#000000">value</font><font color="#434f54">=</font><font color="#000000">take_average</font><font color="#000000">(</font><font color="#000000">25</font><font color="#000000">)</font><font color="#000000">;</font>
+            
+             &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">value</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            </pre>
+  
+        </div>
+
+      </div><!--Row div finishes here-->
+    </div>
+   
     <h3>Data Analysis</h3><!--Mention the derivates and how the rate changes.-->
+
+    <p>
+      As I've said I've taken average of 25 AnalogReads over angle measurements. Here's the data table for my measurements.
+      <image src="capacitve_photos/data-table.jpg" width="750" height="1000"></image>
+
+      My data has some paterns that should be expected. When the bottle is horiziontal the surface area of the water is the most and we expect the highest reading.
+      Also when the water  is rotated towards the other side and is no more touching the copper wires the readings should be the lowest which is supported by my data.
+      Here's the graph of my data.
+
+      <image src="capacitve_photos/graph-of-my-data.png" width="750" height="1000"></image>
+      From my graph there seems to be somewhat trigonemetric relationship beetween the reading and angle. The relationship would be trigonemetric if height and radius were the same.
+      Also the highest of amount of change is happening when the bottle is around 50°. The highest amount of change should happen when the change in the height of the water is highest.
+      Altough my data shows a general path, it's still hard to conclude anything from here and more data has to be taken. To achieve this the sensivity of my sensor has to be increased. this
+      can be done by having a longer tube or findign a way to amplify the signal without any digital amplifcation, or I can use a more powerfull power supply(compared to 5V) which would
+      increase capacitance therefore giving me a gretaer range in arduino.
+    </p>
 
 
 
