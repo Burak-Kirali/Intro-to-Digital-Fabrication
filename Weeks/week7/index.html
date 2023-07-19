@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<title>PS70: Intro to Digital Fabrication </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../style.css" rel="stylesheet">
+<link href="../../buraks-custom.css" rel="stylesheet">
+
+  
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Intro to Digital Fabrication</h3>
+    <div class="navbar-nav">
+      <h4><a class="nav-link" href="../../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../../about-page/index.html">About</a></h4>
+	  <h4><a class="nav-link" href="../../final-project-documentation /index.html">Final Project Documentation</a> </h4>
+    </div>
+  </div>
+</nav>
+
+<body>
+
+  <hr>
+      <h2 id="using-buzzer">Parking Proximity Sensor</h2>
+      <a href="#code-without-delay" class="in-page-link">the code of the system</a>
+      <br>
+      <a href="#oscilescope" class="in-page-link">oscilescope readings</a>
+      <br>
+      <a href="#cading-for cnc" class="in-page-link">cading for cnc</a>
+  <hr>
+
+  <h3>Parking Proximity Sensor</h3>
+  <p>
+    Inspired by the buzzers I saw in the class, I wanted to a project wehre the buzzer start's beeping after some values of a sensor that the beep intensifies as
+    the value increases. I first though of using my tilt sensor but since it had water in it, I may spill it of and decided not to. Instead I deicded to use a ultrasonic sensor.
+    I first wrote my code with delays and recorded some demo's and oscilescope readings while the delay was in the code. Today I changed the code for the buzzer to not have 
+    delay and it worked as fine as before. 
+
+    <br>
+    In real life whenc ars are parking, and the car get's close to a object a beep sound starts in the car. In my project this week I wanted to achieve. To start of
+    I attached a buzzer and potentio-meter to see the range of sound I can get fromn the buzzer and found a voice that matches what I wanted. I playe with it and settled on 
+    800hz as it matched the sound I wanted. After that I thought about how can I make the beep's of the car, the closer you get the faster it beeped and the farther you're the less
+    frequent it beeped. To achieve this I thought of a fixed time of HIGH and a variable time of LOW. I also thought that if the distance was far awaw the buzzer shouldn't beep.
+    I decided that the buzzer would pause for 1.5*times of the HIGH time around 50cm distance and 0MS whent he object was closer than 2.5cm. The ultrasonic sensor started to give
+    extreme values for values closer than 2.5cm and I decided to cut that. Here is a video that demenstroate my project, after ı removed delays
+
+    <video controls >
+      <source src="photos-videos/buzzer-ultrasonic working.mp4" type="video/mp4">
+    </video>
+
+    Also sometimes the ultrasonic sensor  randomly detecrts that are not infront of it. To fix this I probably have to implement some algorithm that keeps track of last 10-20 reads
+    and compares how extreme the result is to the other data. When I open the serial plotter I can definetely see some spikes.
+  </p>
+
+
+  <hr>
+      <h2 id="code-without-delay">Writing a code without Delay</h2>
+
+      <a href="#using-buzzer" class="in-page-link">the system</a>
+        <br>
+      <a href="#oscilescope" class="in-page-link">oscilescope readings</a>
+      <br>
+  <a href="#cading-for cnc" class="in-page-link">cading for cnc</a>
+  <hr>
+  <h3>Writing a Code without Delay</h3>
+  <p>
+    The way my code works is that I get a reading from the distance sensor, check wheather it's less than 50 or not. If it's less than 50 tell the buzzer to beep for a second pause 
+    for a second and repeat with the next reading. Since I avoided using delay the code doesn't like this but instead I update the information on the buzzer whenever I get a reading below 50cm.
+    and on everyloop iteration regardsless of the update I tell it to beep(the beep functions has logic to decide when to beep and hen no to).
+    To not deal with random values from the sensor I set minumum value of the sensor to be 2.5(if it's less than that I make it 2.5). My code takes the value from a raneg of 
+    2.5 to 50 and converts it to a range of 0.01 to 1.5. For this I copied the code for the map function amd made everything double. Here's the code for it.
+  </p>
+
+  <pre class="code">
+    <font color="#00979c">double</font> <font color="#000000">decimal_map</font><font color="#000000">(</font><font color="#00979c">double</font> <font color="#000000">x</font><font color="#434f54">,</font> <font color="#00979c">double</font> <font color="#000000">in_min</font><font color="#434f54">,</font> <font color="#00979c">double</font> <font color="#000000">in_max</font><font color="#434f54">,</font> <font color="#00979c">double</font> <font color="#000000">out_min</font><font color="#434f54">,</font> <font color="#00979c">double</font> <font color="#000000">out_max</font><font color="#000000">)</font> <font color="#000000">{</font>
+      &nbsp;<font color="#5e6d03">return</font> <font color="#000000">(</font><font color="#000000">x</font> <font color="#434f54">-</font> <font color="#000000">in_min</font><font color="#000000">)</font> <font color="#434f54">*</font> <font color="#000000">(</font><font color="#000000">out_max</font> <font color="#434f54">-</font> <font color="#000000">out_min</font><font color="#000000">)</font> <font color="#434f54">&#47;</font> <font color="#000000">(</font><font color="#000000">in_max</font> <font color="#434f54">-</font> <font color="#000000">in_min</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">out_min</font><font color="#000000">;</font><font color="#000000">}</font>
+  </pre>
+
+  <p>
+    On my code what with delay I did was that I multiplied the number beetween 0 to 1.5 with the beep_duration which gave the duration to pause(noo beeping). The ultrasonic sensor
+    sends data really fast and I should have a way to update my buzzer withput having no pauses. My solution is that if an update has comed after the time for a beep and apuse fromt he last
+    time I update the pause_duration and the last_beep_time. If it's while it's in pause time I update nothing so that my beep function (which basically chekcs wheather the difference beetween
+    now and last beep is last than beep_duration or not. If it's less than beep_duration otherwise don't beep(this no beep time includes pauses and time where the sensor is reading high and the buzzer should stop.))
+    can remain silent. If the signal comes while it's beeping I only change the pause_duration. Basically what I'm doing is that if the buzzer is in a beep-pause cycle I let it do it, if it's not
+    I give it instructions to start a new cycle. Here's the code for my buuzer class.
+  </p>
+
+  <pre class="code">
+    <font color="#00979c">class</font> <font color="#000000">Buzzer</font>
+    <font color="#000000">{</font>
+      &nbsp;<font color="#00979c">public</font><font color="#434f54">:</font>
+      &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">pinNum</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">beep_duration</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">pause_duration</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;<font color="#00979c">long</font> <font color="#000000">start_time</font><font color="#000000">;</font>
+    
+      &nbsp;&nbsp;&nbsp;<font color="#000000">Buzzer</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">pin</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">dura</font><font color="#000000">)</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">pinNum</font><font color="#434f54">=</font><font color="#000000">pin</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">pinNum</font><font color="#434f54">,</font><font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">beep_duration</font><font color="#434f54">=</font><font color="#000000">dura</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">pause_duration</font><font color="#434f54">=</font><font color="#434f54">-</font><font color="#000000">11</font><font color="#000000">;</font><font color="#434f54">&#47;&#47;setting some random value so no problems on the first seconds</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">start_time</font><font color="#434f54">=</font><font color="#434f54">-</font><font color="#000000">10000</font><font color="#000000">;</font><font color="#434f54">&#47;&#47;setting a negative number so that no problems on first seconds.</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+    
+      &nbsp;&nbsp;&nbsp;<font color="#00979c">void</font> <font color="#000000">new_info</font><font color="#000000">(</font><font color="#00979c">double</font> <font color="#000000">pause_coef</font><font color="#000000">)</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">long</font> <font color="#000000">current_time</font><font color="#434f54">=</font><font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">time_dif</font><font color="#434f54">=</font><font color="#000000">current_time</font><font color="#434f54">-</font><font color="#000000">start_time</font><font color="#000000">;</font>
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#95a5a6">&#47;*</font>
+    <font color="#95a5a6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* There&#39;ll always be updates when something is close. I don&#39;t wont the pause to be interupted</font>
+    <font color="#95a5a6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* with these changes as the beep won&#39;t work with that. To make this I don&#39;t chang</font>
+    <font color="#95a5a6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&#47;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">time_dif</font><font color="#434f54">&gt;</font> <font color="#000000">beep_duration</font><font color="#434f54">+</font><font color="#000000">pause_duration</font><font color="#000000">)</font><font color="#434f54">&#47;&#47;If a beep-pause cycle has passed</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">start_time</font><font color="#434f54">=</font><font color="#000000">current_time</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">pause_duration</font><font color="#434f54">=</font><font color="#000000">beep_duration</font><font color="#434f54">*</font><font color="#000000">pause_coef</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font> <font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">time_dif</font><font color="#434f54">&lt;</font> <font color="#000000">beep_duration</font><font color="#000000">)</font><font color="#434f54">&#47;&#47;if the system is beeping</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">pause_duration</font><font color="#434f54">=</font><font color="#000000">beep_duration</font><font color="#434f54">*</font><font color="#000000">pause_coef</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+    
+      &nbsp;&nbsp;&nbsp;<font color="#00979c">void</font> <font color="#000000">Beep</font><font color="#000000">(</font><font color="#000000">)</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">long</font> <font color="#000000">current_time</font><font color="#434f54">=</font><font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">current_time</font><font color="#434f54">-</font><font color="#000000">start_time</font><font color="#434f54">&lt;</font> <font color="#000000">beep_duration</font><font color="#000000">)</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">tone</font><font color="#000000">(</font><font color="#000000">pinNum</font><font color="#434f54">,</font> <font color="#000000">800</font><font color="#000000">)</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">noTone</font><font color="#000000">(</font><font color="#000000">pinNum</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">}</font> &nbsp;&nbsp;&nbsp;
+    <font color="#000000">}</font><font color="#000000">;</font>
+  </pre>
+  <p>
+    In here I use the 2argument one Functions. Altough I could've the used the 3 argument one and ovid the NoTone functions. As I'm thinking I could've added logic
+    to so that the tone and NoTone functions are called once in a cycle not ever iteration of the loop. I probably would've done with this some boolean variables functions as 
+    signals to me. Here's the code for my set-up and Loop
+  </p>
+  <pre class="code">
+    <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+      &nbsp;<font color="#000000">distanceSensor</font><font color="#434f54">.</font><font color="#000000">send_signal_update</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+      &nbsp;<font color="#00979c">double</font> <font color="#000000">distance</font><font color="#434f54">=</font> <font color="#000000">distanceSensor</font><font color="#434f54">.</font><font color="#000000">get_distance</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+      &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">distance</font><font color="#000000">)</font><font color="#000000">;</font>
+      &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;cm&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+      &nbsp;
+      &nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">distance</font> <font color="#434f54">&lt;</font><font color="#000000">50</font><font color="#000000">)</font>
+      &nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">distance</font><font color="#434f54">&lt;</font><font color="#000000">2.5</font><font color="#000000">)</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">distance</font><font color="#434f54">=</font><font color="#000000">2.5</font><font color="#000000">;</font>
+      &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+      &nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">pause_coef</font><font color="#434f54">=</font><font color="#000000">decimal_map</font><font color="#000000">(</font><font color="#000000">distance</font><font color="#434f54">,</font><font color="#000000">2.5</font><font color="#434f54">,</font><font color="#000000">50</font><font color="#434f54">,</font><font color="#000000">0.01</font><font color="#434f54">,</font><font color="#000000">1.5</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+      &nbsp;&nbsp;&nbsp;<font color="#000000">carBeeper</font><font color="#434f54">.</font><font color="#000000">new_info</font><font color="#000000">(</font><font color="#000000">pause_coef</font><font color="#000000">)</font><font color="#000000">;</font> 
+      &nbsp;<font color="#000000">}</font>
+    
+      &nbsp;<font color="#000000">carBeeper</font><font color="#434f54">.</font><font color="#000000">Beep</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    </pre>
+    <p>
+      I set the pins to Output and Input in the classes so I just have to begin the serial monitor so that I can see wheather the data I'm getting is correct or not. I create
+      the objects of the classes before the set-up. On my loop I use a 2 function to process to get sensor reading. I couldv've easily made this 1 code but decided to
+      seperate sendign signal and recieving signal parts. Altough I check for extreme values in the ultrasonic class. The sensor my still give accurate readings that below 2.5.
+      To have consistency with them I artifically put a lower limit of 2.5cm and force values below it to be 2.5.
+      <br>
+      The ultrasonic sensor works by sending ultrasonic sound waves for 10 microseconds and waiting the time for the signal's to reach it. AFter that I can use simple math to calculate
+      the distance. From what I've seen on  the internet they suggest setting the trigger pin to low before sending high. İn my code with delay it was. Low, wait 10 microseconds, high
+      wait 10 more microseconds, and send LOW then I call the pulseIn function to wait for the sound to come back.  I initially didn't want to convert the code withotu delay as I though
+      the arduino's time to exucute insturctions won't give me the accuracy I want. I created a code that had the pauses with Micros() but it didn't work out. After aproaching Bobby
+      he suggested me to just use send LOW, SEND HIGH, SEND LOW with nothing in beetween. This aproach worked as the ultrasonic needs a really small time to send the waves. The above video 
+      is from this version. Altough I only used 1 sensor, I still created a class for ultrasonic sensor and the buzzer it would seperate the code of them. Here's my hole class for the ultrasonic
+      sensor. 
+    </p>
+
+    <pre class="code">
+      <font color="#00979c">const</font> <font color="#00979c">double</font> <font color="#000000">speed_of_sound_cm</font><font color="#434f54">=</font> <font color="#000000">0.0343</font><font color="#000000">;</font><font color="#434f54">&#47;&#47;in micro-seconds because that&#39;s how pulseIn works</font>
+      
+      <font color="#00979c">int</font> <font color="#000000">buzzerPin</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+      
+      <font color="#00979c">class</font> <font color="#000000">UltraSonicSensor</font>
+      <font color="#000000">{</font>
+       &nbsp;<font color="#00979c">public</font><font color="#434f54">:</font>
+       &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">trig_pin</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">echo_pin</font><font color="#000000">;</font>
+       &nbsp;
+       &nbsp;<font color="#00979c">public</font><font color="#434f54">:</font>
+       &nbsp;<font color="#000000">UltraSonicSensor</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">trig</font><font color="#434f54">,</font> <font color="#00979c">int</font> <font color="#000000">echo</font><font color="#000000">)</font>
+       &nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">trig_pin</font><font color="#434f54">=</font><font color="#000000">trig</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">echo_pin</font><font color="#434f54">=</font><font color="#000000">echo</font><font color="#000000">;</font>
+      
+       &nbsp;&nbsp;&nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">trig_pin</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">echo_pin</font><font color="#434f54">,</font> <font color="#00979c">INPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+       &nbsp;<font color="#00979c">public</font><font color="#434f54">:</font>
+       &nbsp;<font color="#00979c">void</font> <font color="#000000">send_signal_update</font><font color="#000000">(</font><font color="#000000">)</font>
+       &nbsp;<font color="#000000">{</font> &nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">trig_pin</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">trig_pin</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">trig_pin</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">}</font>
+      
+       &nbsp;<font color="#00979c">public</font><font color="#434f54">:</font>
+       &nbsp;<font color="#00979c">double</font> <font color="#000000">get_distance</font><font color="#000000">(</font><font color="#000000">)</font>
+       &nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">duration</font> <font color="#434f54">=</font> <font color="#d35400">pulseIn</font><font color="#000000">(</font><font color="#000000">echo_pin</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+       &nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">distance</font><font color="#434f54">=</font><font color="#000000">(</font><font color="#000000">duration</font><font color="#434f54">&#47;</font><font color="#000000">2.0</font><font color="#000000">)</font><font color="#434f54">*</font><font color="#000000">speed_of_sound_cm</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">filtered_distance</font><font color="#434f54">=</font><font color="#000000">filter_data</font><font color="#000000">(</font><font color="#000000">distance</font><font color="#000000">)</font><font color="#000000">;</font>
+      
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">return</font> <font color="#000000">filtered_distance</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">}</font>
+      
+       &nbsp;<font color="#00979c">private</font><font color="#434f54">:</font>
+       &nbsp;<font color="#00979c">double</font> <font color="#000000">filter_data</font><font color="#000000">(</font><font color="#00979c">double</font> <font color="#000000">distance</font><font color="#000000">)</font>
+       &nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">filtered</font><font color="#434f54">=</font><font color="#000000">distance</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">distance</font><font color="#434f54">&gt;</font><font color="#000000">1000</font><font color="#000000">)</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">filtered</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+       &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+       &nbsp;&nbsp;&nbsp;<font color="#5e6d03">return</font> <font color="#000000">filtered</font><font color="#000000">;</font>
+       &nbsp;<font color="#000000">}</font>
+       &nbsp;
+      <font color="#000000">}</font><font color="#000000">;</font>
+      
+      </pre>
+      <p>
+
+      In the filter method, I autumatically asign any values values greaten 1000cm to 0. That is because the range of the sensor is only 400cm and during testing it gave me values greater than 1000cm
+      when my hand was really close. Send_signal and get_distance come together. I could've put the logic in 1 function but decided to split it. When I call them in loop,
+      I literally do send_signal(); double= get_distance(); Also since pulseIn gives me a value in microseconds, my constant has spped of sound in microseconds. This code doesn2t use any delay
+      PulseIn works as a delay, because the function waits for the echo-pin to be HIGH and during that time I literally can do nothing. A betteer way to do this that start timer and
+        and record the time when it becomes(PulseIn does this, but doing in multiple loops with Micros() function so PulseIn doesn't block me).
+
+      <br>
+
+      </p>
+
+    <hr>
+        <h2 id="oscilescope">Oscilescope Readings and Backtracking the Sensor Readings</h2>
+        <a href="#using-buzzer" class="in-page-link">the system</a>
+            <br>
+        <a href="#code-without-delay" class="in-page-link">the code of the system</a>
+		    <br>
+        <a href="#cading-for cnc" class="in-page-link">cading for cnc</a>
+    <hr>
+
+    <p>
+      Although my code has no delay while I was the Oscilescope my code had delay in it. I've explained how my code work with the delays. It sends tone foır a duration waits 50ms.
+      Then Notone for 50*(coef) ms depending on the sensor readings. The way tone works is that I sends High for a durationd Low duration and does this quickly. the total HIgh-low 
+      cycles has to happen 800 times a second because my buzzer is 800hz.  This gives a wavelength ıf 1.25mm and 0.625mm for 5V and 0.625 for 0V. While Using oscilescope I put my set
+      up there, then attached the ends of the oscilescope to the buzzer. Luckily this process was easy. After that I aligned it horizontally and set the resulation to around 100MS. so That
+      I can see the cycle's easily and zoom in to the one. Because the pause time always changed I paused the oscilescope and read the waves. With my Oscilescope I saw the wave-length 
+      of the Tone-functions Pulses. Also the my pauses beetween beeps. I found the wave-length to be roughly 1.25mm on the Oscilescope. Also with the pause I made some back tracking
+      and found the distance range these values correspond to. To make sure my calculations were right I put these values manually to a code I wrote let the buzzer beep for these.
+      On my calculations I assumed a map fro  0.00 to 1.50(not a range of 0.01to 1.50), and recorded one of the videos as like that. On the 3rd video I realized this and changed for the upper-bound but didn't do it
+      for the lower bound. Here are 3 videos that goes to detail of things I've written here.ç
+    </p>
+
+    <div class="container-fluid text-center">
+      <div class="row ">
+  
+        <div class="col-4 border border-dark">
+          <h3>Here^s me doing Square Wave Analysis</h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/HWsoK0rETh8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+  
+        <div class="col-4 border border-dark">
+          <h3> Here's me doing backtrackign with Pause Lengths</h3>
+          <p> In here I assumed a map from 0 to 1.50 so the decimal values will be a little wrong</p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/U--uuBlCWb8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          
+        </div>
+
+        <div class="col-4 border border-dark">
+          <h3> Here's me Testing my Backtracking With Forcing Values In</h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/pmu1Bt57dfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div><!--Row div finishes here-->
+    </div>
+
+    <hr>
+        <h2 id="cading-for cnc">Cading a File for CNC</h2>
+
+        <a href="#using-buzzer" class="in-page-link">the system</a>
+            <br>
+        <a href="#code-without-delay" class="in-page-link">the code of the system</a>
+		    <br>
+        <a href="#oscilescope" class="in-page-link">oscilescope readings</a>
+		    
+    <hr>
+    
+
+
+
+
+</body>
+
+<script src="./strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>
+
+
+
+
