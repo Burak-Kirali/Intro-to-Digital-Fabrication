@@ -298,9 +298,91 @@
             <br>
         <a href="#code-without-delay" class="in-page-link">the code of the system</a>
 		    <br>
-        <a href="#oscilescope" class="in-page-link">oscilescope readings</a>
-		    
+        <a href="#oscilescope" class="in-page-link">oscilescope readings</a>  
     <hr>
+    <h3>A demo Piece for my Hoop Project</h3>
+    <p>
+      For the CNC homework I've decided to Cad a piece that we may use in our Basketball-rim project(but probably not going to use it). İt's a piece that attaches to the bottom half 
+      of the rim and have 2 holes on it for the accelerometer to be bolted. Before I CNC-ed the piece, I wanted to make sure it worked by 3-d printing and I printed 2 times, each time
+      realising that I found the diameter of the rim(the little circular bit not the diamter of the whole hoop). I think my final version works but there's some overfill on it's current
+      fill because of it one part of it fits while the other doesn't. Here's a photo of me puting it to the rim. This is the part that fit in but the other side of the part didn't go in.
+    </p>
+    <image src="photos-videos/3-dprint on the rim.jpg" width="750" height="1000"></image>
+
+    <h3>Cad-ing it</h3>
+    <p>
+      When I was started to cad it I had an idea of what I wanted to built and I had an complicated plan of it. After thinking about it for a minute I realized that I can do a revolve
+      around basketball hoop. After Realizing this I sketched out the piece and revolved it around the center by 5.5 degrees. I choose 5.5 as it allowed a surface that have 2 holes that 16mm apart(
+      the distance beetween centers of 2 holes for to put M3 bolts on the accelerometer) and left some edge left. To no deal with any rotation axes problems. I choose a plane,
+      and placed a 47.5/2cm. 47.5cm is the diameter of the rim from the inner end to the inner end. After that Construction Line I drew another 17mm consturctio  line(diameter of the rim).
+      And connected the 2 points to make a circle then trimmed the upper part of. Here are 3 photos from the sketch and revolving in fusion.
+    </p>
+
+
+    <div class="container-fluid">
+      <div class="row ">
+      
+        <div class="col-4 border border-dark">
+          <h3> Sketch for the Hoop Radius</h3>
+          <img src="photos-videos/hoop_radius_sketch.png" width="400" height="600">
+          
+        </div>
+  
+  
+        <div class="col-4 border border-dark">
+          <h3> Sketch of the Actual Piece</h3>
+          <img src="photos-videos/sketch of the design.png" width="400" height="600">
+          <p>
+            I leave 8mm indent so that I can put holes for accelerometer and have some space. This 8mm piece will be effected by the circular curvature 
+            the most so I wanted to give the most space.
+          </p>
+        </div>
+        <div class="col-4 border border-dark">
+          <h3> Here's me revolving it</h3>
+          <img src="photos-videos/revolving it.png"400" height="600">
+        </div>
+      </div>
+    </div>
+
+    <p>
+      I had no idea for the size of the MPU6050. So I searched for it's cad file in the internet found somethings. Then I downloaded them, I unfortunately don't remember which
+      one I downloaded but it's from grapbCad. The file came as a mesh and I converted it to a solid. After that I measured the diameter of the holes for bolts(they were obviously M3).
+      Then I found the distance beetween circle's center's by drawing 2 circle's and seeing the distance beetween them. On my rough size measurements the values were close to 3mm and 16mm
+      but not exact. I assumed the designers of the MPU6050 won't put a distance of 15.9967483mm and have integers(my assumption worked). Here's a photo of me measuring the distances and also
+      the STL file of the MPU6050
+    </p>
+    <image src="photos-videos/MPU6050- size-photo.png" width="750" height="1000"></image>
+    <p>
+     after that I caded this on the surface I created on fusion. Here's the photo of the sketch and cut. I tried to leave some space from the edge and the holes for sturctural reasons.
+    </p>
+
+    <div class="container-fluid text-center">
+      <div class="row ">
+  
+        <div class="col-4 border border-dark">
+          <h3>Here's me Sketching</h3>
+          <img src="photos-videos/sketch of the holes.png"400" height="600">
+        </div>
+  
+        <div class="col-4 border border-dark">
+          <h3> Here's me Doing the Cuts</h3>
+          <img src="photos-videos/cutting the holes.png"400" height="600">
+        </div>
+        <div class="col-4 border border-dark">
+          <a href="photos-videos/MPU_6050.stl" download >MPU6050</a>
+
+          <p> I don't exatcly know but I my have downloaded from</p>
+          <a href="https://grabcad.com/library/tag/mpu6050">this link</a>
+        </div>
+
+      </div><!--Row div finishes here-->
+    </div><!--<a href="photos_and_files/burak-glue-bottle.stl" download>here</a>-->
+
+    <p>
+      After I designed these I printed these on the lab and iterated over the dimension of the rim dimension I changed it from 17mm to 14.6mm. Here's the photo
+      of it's latest print
+    </p>
+    <image src="photos-videos/latest_print.jpg" width="750" height="1000"></image>
     
 
 
