@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<title>PS70: Intro to Digital Fabrication </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../style.css" rel="stylesheet">
+<link href="../../buraks-custom.css" rel="stylesheet">
+
+  
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Intro to Digital Fabrication</h3>
+    <div class="navbar-nav">
+      <h4><a class="nav-link" href="../../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../../about-page/index.html">About</a></h4>
+	  <h4><a class="nav-link" href="../../final-project-documentation /index.html">Final Project Documentation</a> </h4>
+    </div>
+  </div>
+</nav>
+
+<body>
+  <h2> Controlling an LED with a Slider</h2>
+
+  <p>
+    This for IOT I first thought of using google's Firabase service and put some data from light Sensor to there. I wanted something where I can connect to the global internet and not
+    just a local server like the blink LED example's. First I used <a href="https://randomnerdtutorials.com/esp32-firebase-realtime-database/">this tutorial</a> from RandomNerd to Connect to the 
+    FireBase, I used MakerSpace's wifi. After that I looked at the code and saw what it did. It's sending data every 15 seconds with millis(). After getting the code working I wanted
+    the readings from lightSensor to be put on the website. This was not that hard. The example send's data by sendint, function and I just changed it to send the reading from the lightSensor.
+    Also instead of millis() I just added 500ms of delay at the end of the code, I unfortunately didn't record any live demo of this. <a href="#bottom-of-code">Click Here</a> to jump to the bttom of the code.
+  </p>
+
+  <pre class="code"> 
+    <code>
+    <font color="#95a5a6">&#47;*</font>
+    <font color="#95a5a6"> &nbsp;Rui Santos</font>
+    <font color="#95a5a6"> &nbsp;Complete project details at our blog.</font>
+    <font color="#95a5a6"> &nbsp;&nbsp;&nbsp;- ESP32: </font><u><font color="#95a5a6">https:&#47;&#47;RandomNerdTutorials.com&#47;esp32-firebase-realtime-database&#47;</font></u><font color="#95a5a6"></font>
+    <font color="#95a5a6"> &nbsp;&nbsp;&nbsp;- ESP8266: </font><u><font color="#95a5a6">https:&#47;&#47;RandomNerdTutorials.com&#47;esp8266-nodemcu-firebase-realtime-database&#47;</font></u><font color="#95a5a6"></font>
+    <font color="#95a5a6"> &nbsp;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.</font>
+    <font color="#95a5a6"> &nbsp;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</font>
+    <font color="#95a5a6"> &nbsp;Based in the RTDB Basic Example by Firebase-ESP-Client library by mobizt</font>
+    <font color="#95a5a6"> &nbsp;</font><u><font color="#95a5a6">https:&#47;&#47;github.com&#47;mobizt&#47;Firebase-ESP-Client&#47;blob&#47;main&#47;examples&#47;RTDB&#47;Basic&#47;Basic.ino</font></u><font color="#95a5a6"></font>
+    <font color="#95a5a6">*&#47;</font>
+    
+    <font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><font color="#000000">Arduino</font><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+    <font color="#5e6d03">#if</font> <font color="#000000">defined</font><font color="#000000">(</font><font color="#000000">ESP32</font><font color="#000000">)</font>
+     &nbsp;<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">WiFi</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+    <font color="#5e6d03">#elif</font> <font color="#000000">defined</font><font color="#000000">(</font><font color="#000000">ESP8266</font><font color="#000000">)</font>
+     &nbsp;<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><font color="#000000">ESP8266WiFi</font><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+    <font color="#5e6d03">#endif</font>
+    <font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><font color="#000000">Firebase_ESP_Client</font><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+    
+    <font color="#434f54">&#47;&#47;Provide the token generation process info.</font>
+    <font color="#5e6d03">#include</font> <font color="#005c5f">&#34;addons&#47;TokenHelper.h&#34;</font>
+    <font color="#434f54">&#47;&#47;Provide the RTDB payload printing info and other helper functions.</font>
+    <font color="#5e6d03">#include</font> <font color="#005c5f">&#34;addons&#47;RTDBHelper.h&#34;</font>
+    
+    <font color="#434f54">&#47;&#47; Insert your network credentials</font>
+    <font color="#5e6d03">#define</font> <font color="#000000">WIFI_SSID</font> <font color="#005c5f">&#34;MAKERSPACE&#34;</font>
+    <font color="#5e6d03">#define</font> <font color="#000000">WIFI_PASSWORD</font> <font color="#005c5f">&#34;12345678&#34;</font>
+    
+    <font color="#434f54">&#47;&#47; Insert Firebase project API Key</font>
+    <font color="#5e6d03">#define</font> <font color="#000000">API_KEY</font> <font color="#005c5f">&#34;AIzaSyC6vlyjhakLx_yv6jIRJMYVAq4zi_lHB6I&#34;</font>
+    
+    <font color="#434f54">&#47;&#47; Insert RTDB URLefine the RTDB URL *&#47;</font>
+    <font color="#5e6d03">#define</font> <font color="#000000">DATABASE_URL</font> <font color="#005c5f">&#34;https:&#47;&#47;putting-light-sensor-values-default-rtdb.firebaseio.com&#47;&#34;</font> 
+    
+    <font color="#434f54">&#47;&#47;Define Firebase Data object</font>
+    <font color="#000000">FirebaseData</font> <font color="#000000">fbdo</font><font color="#000000">;</font>
+    
+    <font color="#000000">FirebaseAuth</font> <font color="#000000">auth</font><font color="#000000">;</font>
+    <font color="#000000">FirebaseConfig</font> <font color="#d35400">config</font><font color="#000000">;</font>
+    
+    <font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">sendDataPrevMillis</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+    <font color="#00979c">int</font> <font color="#000000">count</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+    <font color="#00979c">bool</font> <font color="#000000">signupOK</font> <font color="#434f54">=</font> <font color="#00979c">false</font><font color="#000000">;</font>
+    
+    <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">{</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">115200</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">WiFi</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">WIFI_SSID</font><font color="#434f54">,</font> <font color="#000000">WIFI_PASSWORD</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Connecting to Wi-Fi&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#5e6d03">while</font> <font color="#000000">(</font><b><font color="#d35400">WiFi</font></b><font color="#434f54">.</font><font color="#d35400">status</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">WL_CONNECTED</font><font color="#000000">)</font><font color="#000000">{</font>
+     &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;.&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">300</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#000000">}</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Connected with IP: &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><b><font color="#d35400">WiFi</font></b><font color="#434f54">.</font><font color="#d35400">localIP</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+     &nbsp;<font color="#95a5a6">&#47;* Assign the api key (required) *&#47;</font>
+     &nbsp;<font color="#d35400">config</font><font color="#434f54">.</font><font color="#000000">api_key</font> <font color="#434f54">=</font> <font color="#000000">API_KEY</font><font color="#000000">;</font>
+    
+     &nbsp;<font color="#95a5a6">&#47;* Assign the RTDB URL (required) *&#47;</font>
+     &nbsp;<font color="#d35400">config</font><font color="#434f54">.</font><font color="#000000">database_url</font> <font color="#434f54">=</font> <font color="#000000">DATABASE_URL</font><font color="#000000">;</font>
+    
+     &nbsp;<font color="#95a5a6">&#47;* Sign up *&#47;</font>
+     &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><b><font color="#d35400">Firebase</font></b><font color="#434f54">.</font><font color="#000000">signUp</font><font color="#000000">(</font><font color="#434f54">&amp;</font><font color="#d35400">config</font><font color="#434f54">,</font> <font color="#434f54">&amp;</font><font color="#000000">auth</font><font color="#434f54">,</font> <font color="#005c5f">&#34;&#34;</font><font color="#434f54">,</font> <font color="#005c5f">&#34;&#34;</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">{</font>
+     &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;ok&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;&nbsp;&nbsp;<font color="#000000">signupOK</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+     &nbsp;<font color="#000000">}</font>
+     &nbsp;<font color="#5e6d03">else</font><font color="#000000">{</font>
+     &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">printf</font><font color="#000000">(</font><font color="#005c5f">&#34;%s\n&#34;</font><font color="#434f54">,</font> <font color="#d35400">config</font><font color="#434f54">.</font><font color="#000000">signer</font><font color="#434f54">.</font><font color="#000000">signupError</font><font color="#434f54">.</font><font color="#000000">message</font><font color="#434f54">.</font><font color="#000000">c_str</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#000000">}</font>
+    
+     &nbsp;<font color="#95a5a6">&#47;* Assign the callback function for the long running token generation task *&#47;</font>
+     &nbsp;<font color="#d35400">config</font><font color="#434f54">.</font><font color="#000000">token_status_callback</font> <font color="#434f54">=</font> <font color="#000000">tokenStatusCallback</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47;see addons&#47;TokenHelper.h</font>
+     &nbsp;
+     &nbsp;<b><font color="#d35400">Firebase</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#434f54">&amp;</font><font color="#d35400">config</font><font color="#434f54">,</font> <font color="#434f54">&amp;</font><font color="#000000">auth</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">Firebase</font></b><font color="#434f54">.</font><font color="#000000">reconnectWiFi</font><font color="#000000">(</font><font color="#00979c">true</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+     &nbsp;<font color="#000000">set_lightSensor</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    
+    <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">{</font>
+     &nbsp;
+     &nbsp;<font color="#00979c">int</font> <font color="#000000">val</font><font color="#434f54">=</font><font color="#000000">read_light_sensor</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">val</font><font color="#000000">)</font><font color="#000000">;</font>
+     
+     &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><b><font color="#d35400">Firebase</font></b><font color="#434f54">.</font><font color="#d35400">ready</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">signupOK</font> <font color="#000000">)</font><font color="#000000">{</font>
+     &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Write an Int number on the database path test&#47;int</font>
+     &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><b><font color="#d35400">Firebase</font></b><font color="#434f54">.</font><font color="#000000">RTDB</font><font color="#434f54">.</font><font color="#d35400">setInt</font><font color="#000000">(</font><font color="#434f54">&amp;</font><font color="#000000">fbdo</font><font color="#434f54">,</font> <font color="#005c5f">&#34;lightSensor&#47;val&#34;</font><font color="#434f54">,</font> <font color="#000000">val</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">{</font>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;PASSED&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;PATH: &#34;</font> <font color="#434f54">+</font> <font color="#000000">fbdo</font><font color="#434f54">.</font><font color="#000000">dataPath</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;TYPE: &#34;</font> <font color="#434f54">+</font> <font color="#000000">fbdo</font><font color="#434f54">.</font><font color="#000000">dataType</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+     &nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font> <font color="#000000">{</font>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;FAILED&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;REASON: &#34;</font> <font color="#434f54">+</font> <font color="#000000">fbdo</font><font color="#434f54">.</font><font color="#000000">errorReason</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+     &nbsp;&nbsp;&nbsp;<font color="#000000">count</font><font color="#434f54">++</font><font color="#000000">;</font>
+     &nbsp;<font color="#000000">}</font>
+     &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">500</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    
+    <font color="#00979c">int</font> <font color="#000000">light_sensor_pin</font><font color="#434f54">=</font><font color="#000000">34</font><font color="#000000">;</font>
+    <font color="#00979c">void</font> <font color="#000000">set_lightSensor</font><font color="#000000">(</font><font color="#000000">)</font>
+    <font color="#000000">{</font>
+     
+     &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">light_sensor_pin</font><font color="#434f54">,</font> <font color="#00979c">INPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;\n LightSensor is put \n&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    
+    <font color="#00979c">int</font> <font color="#000000">read_light_sensor</font><font color="#000000">(</font><font color="#000000">)</font>
+    <font color="#000000">{</font>
+     &nbsp;<font color="#00979c">int</font> <font color="#000000">val</font><font color="#434f54">=</font><font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">light_sensor_pin</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#5e6d03">return</font> <font color="#000000">val</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    </code>
+    </pre>
+
+    <p id="bottom-of-code">
+        The assignment wants me to control a microcontroller from web and what I did with firebase, I was not able control the microcontroller, I was just putting some data I got
+        from the microcontroller to the web. After I searched for how I can control a microcontroller from web I decided to use arduino's IOT. I choose that because 
+        I have no knowledge in javascript so it would've been pain for me to get a basic website working. What I wanted to do was control the brightness of an LED, by a slider.
+        Before I can do all of this I first had to get basics of Arduino IOT done, for that I used multiple tutorials but primarily <a href="https://docs.arduino.cc/arduino-cloud/getting-started/iot-cloud-getting-started"> this tutorial</a> helped me.
+
+        <br>
+
+        I first added an ESP-32, I was using ESP-32 wroom so I choose ESP-32-Dev Module. After that, as I was following the tutorial, I created my "thing" and created a 
+        led_light_Level variable and made it read-and-write. I wish there was a read-only mode but that didn't exist. I was going to use this variable to adjust the light-level,
+        but before doing that I wanted to make sure that I was controling the esp32. To do that I just atteched an LED to pin4 and in the loop just made pinMode(4,high).
+        After some trouble-shooting I was able manage that. After that I created a slider in the dashboard and connected it to the led_light_Level variable. After I was able to
+        connect my LED to the ESP-32. I wanted to make sure changes in dashboard were reflected. The way I achieved was that O programed a simpple code that
+        turns on and off the LED as the slider is moved. It worked after that I googled how to use PWM on ESP-32 and made the code so that as I moved the slider, the LED'as brightness chanegd accordingly.
+        To make the LED have a spectrum of light I put onlhy a 18ohm resistor. Here are some photos from  IOT-CLOUD.
+        
+   </p>
+
+
+	<div class="container-fluid">
+		<div class="row ">
+		
+			<div class="col-3 border border-dark">
+				<img src="code-snippets/adding-esp32-to-arduinoIOT.png" width="400" height="600">
+			
+			</div>
+
+
+			<div class="col-3 border border-dark">
+        <img src="code-snippets/creating-the-THING.png" width="400" height="600">
+        <p>
+          This is me creating the project basically(arduino calls it a "thing" but the "thing" serves as a project spot)
+        </p>
+			</div>
+
+			<div class="col-3 border border-dark">
+				<img src="code-snippets/dashboard-setting-theslider.png" width="400" height="600">
+          <p>
+            This is the slider I've created
+          </p>
+				 
+			</div>
+
+      <div class="col-3 border border-dark">
+				<img src="code-snippets/variable_change_function.png" width="400" height="600">
+        <p>
+          ardu,ino autmaticalls this functions as I move the slider this is a code-snippet from the final version
+        </p>
+				 
+			</div>
+
+		</div>
+	</div>
+
+  <p>
+    After I made sure the changes in the slider value was effecting the LED, I used <a href="https://randomnerdtutorials.com/esp32-pwm-arduino-ide/">this tutorial</a>
+    to write PWM signals from pin 15. The tutorial says 5000hz is enough for an LED but since I was using low resistance I wanted to be sure that's why I set the frequency to 10k hz.
+    Also I wanted to have a resulution of 2^10 thinking that I may be able to see the difference. After testing having 2^8 or even 2^7 resulation would've worked cause
+    human eyes can't detect those little differences. I added to channel 0 as it was there was only one channel I was using. Here's my code for it.
+  </p>
+
+  <pre class="code"> 
+    <code>
+    <font color="#5e6d03">#include</font> <font color="#005c5f">&#34;thingProperties.h&#34;</font>
+    
+    <font color="#00979c">int</font> <font color="#000000">led_pin</font><font color="#434f54">=</font><font color="#000000">15</font><font color="#000000">;</font>
+    <font color="#00979c">int</font> <font color="#000000">iot_channel</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+    <font color="#00979c">int</font> <font color="#000000">freq</font><font color="#434f54">=</font><font color="#000000">10000</font><font color="#000000">;</font>
+    <font color="#00979c">int</font> <font color="#000000">resolution</font><font color="#434f54">=</font><font color="#000000">10</font><font color="#000000">;</font><font color="#434f54">&#47;&#47;1023 limit</font>
+    <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+     &nbsp;<font color="#434f54">&#47;&#47; Initialize serial and wait for port to open:</font>
+     &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#434f54">&#47;&#47; This delay gives the chance to wait for a Serial Monitor without blocking if none is found</font>
+     &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1500</font><font color="#000000">)</font><font color="#000000">;</font> 
+    
+     &nbsp;<font color="#434f54">&#47;&#47; Defined in thingProperties.h</font>
+     &nbsp;<font color="#000000">initProperties</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+     &nbsp;<font color="#434f54">&#47;&#47; Connect to Arduino IoT Cloud</font>
+     &nbsp;<font color="#000000">ArduinoCloud</font><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">ArduinoIoTPreferredConnection</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">led_pin</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+    
+     &nbsp;<font color="#000000">setDebugMessageLevel</font><font color="#000000">(</font><font color="#000000">2</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;<font color="#000000">ArduinoCloud</font><font color="#434f54">.</font><font color="#000000">printDebugInfo</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;
+     &nbsp;<font color="#000000">ledcSetup</font><font color="#000000">(</font><font color="#000000">iot_channel</font><font color="#434f54">,</font> <font color="#000000">freq</font><font color="#434f54">,</font> <font color="#000000">resolution</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;
+     &nbsp;<font color="#434f54">&#47;&#47; attach the channel to the GPIO to be controlled</font>
+     &nbsp;<font color="#000000">ledcAttachPin</font><font color="#000000">(</font><font color="#000000">led_pin</font><font color="#434f54">,</font> <font color="#000000">iot_channel</font><font color="#000000">)</font><font color="#000000">;</font>
+    <font color="#000000">}</font>
+    
+    <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+     &nbsp;<font color="#000000">ArduinoCloud</font><font color="#434f54">.</font><font color="#d35400">update</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;
+    <font color="#000000">}</font>
+    
+    <font color="#00979c">void</font> <font color="#000000">onLedLightStrengthChange</font><font color="#000000">(</font><font color="#000000">)</font> &nbsp;<font color="#000000">{</font>
+    
+     &nbsp;<font color="#000000">ledcWrite</font><font color="#000000">(</font><font color="#000000">iot_channel</font><font color="#434f54">,</font><font color="#000000">led_light_strength</font><font color="#000000">)</font><font color="#000000">;</font>
+     &nbsp;
+    <font color="#000000">}</font>
+    </code>
+    </pre>
+
+    <p>
+      Here's a video of a video of my set-up.
+    </p>
+
+    <iframe width="315" height="560"
+src="https://youtube.com/embed/BYjdTFeGzjQ?feature=share"
+title="YouTube video player" frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture;
+web-share"
+allowfullscreen></iframe>
+
+
+
+
+</body>
+
+<script src="./strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>
+
