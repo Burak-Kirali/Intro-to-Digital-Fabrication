@@ -95,3 +95,12 @@ pre.code
     background-color: white;
     font-size: 16;
 }
+
+pre.scrollable
+{
+    text-align: left;
+    background-color: white;
+    font-size: 16;
+    height:600px;
+    overflow-y: scroll;
+}

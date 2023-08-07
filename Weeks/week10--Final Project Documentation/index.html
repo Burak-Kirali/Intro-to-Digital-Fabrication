@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>PS70: Intro to Digital Fabrication </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../style.css" rel="stylesheet">
+<link href="../../buraks-custom.css" rel="stylesheet">
+
+  
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Intro to Digital Fabrication</h3>
+    <div class="navbar-nav">
+      <h4><a class="nav-link" href="../../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../../about-page/index.html">About</a></h4>
+	  <h4><a class="nav-link" href="../../final-project-documentation /index.html">Final Project Documentation</a> </h4>
+    </div>
+  </div>
+</nav>
+
+<body >
+    <hr>
+        <h2 id="overall">Overall Design</h2>
+        <a class="in-page-link" href="#cad-ing">Cad-ing</a>
+        <a class="in-page-link" href="#problems">Problems we Ran Into</a>
+        <a class="in-page-link" href="#coding">Coding</a>
+        <a class="in-page-link" href="#improvements">Improvements</a>
+    <hr>
+    <p>
+        To start our project we needed to decide a way to detect where to ball hit on the hoop. I first thought of using some strain gauges but Nathan suggested us to use 
+        acceloremeter's so we decided to use 4 accelerometer to detect where the ball hit on the rim. We also thought of using a light sensor for wheather the ball actually went in or not.
+        However we couldn't implement these because of the problems we faced with the acceloremeters. Having 4 accelerometer's was the main decision that determined the rest of
+        the decision for the project. The question after deciding to use 4 acceloremeters was that how to actually do it and it seems harder than it catches the eye. We
+        first though of using 4 MPU6050's however they cominucate with I2C and you can have only 2 MPU6050's connected to the ESP32 at once(because of I2C adress limitations). 
+        Because of this we decided to use 2 MPU6050 and 2 LIS3H accelormeter's so that we didn't have to do fancy things with I2C adres's. Also we wanted to put 
+        acceloremeters evenly spaced out.
+
+    </p>
+
+    <hr>
+        <h2 id="cad-ing">Placement of Accelerometer's and Cad-ing</h2>
+        <a class="in-page-link" href="#overall">Overall Design</a>
+        <a class="in-page-link" href="#problems">Problems we Ran Into</a>
+        <a class="in-page-link" href="#coding">Coding</a>
+        <a class="in-page-link" href="#improvements">Improvements</a>
+    <hr>
+
+    <p>
+        We originally wanted to put 1 accelormeters near backbaord 2 in the middle and 1 far, and we acheived this by putting them by attaching them by tape. However
+        this resulted a little of angled axis's and readings from acceloremets. I wanted them to be not angled at all that's why I needed to attach them by 3--sprinbted pieces. However
+        to the attachments for the string of the hoop around the places I wanted to put, we've dicded to put the acceloremeters in 45° offset position. Here's a photo explaining this 
+        <img src="photos-cads-codes/placement_of_accelerometers.jpg" width="400" height="600">
+        <br>
+
+        After this I choose to put a piece that wraps some part of the rim and then attach the accelorometer's into by bolts. This would ensure that the axis's are in right angles to the ground.
+        Here's an example of these compenents(to put them in the hoop I had to cad the piece in 2 and print of them).
+        <img src="photos-cads-codes/example_wraap_photo.png" width="400" height="600">
+
+        The rim is just a 14.6mm diameter circles rapped around in a bigger circle. In my design I just cad-ed a half circle with 14.6mm diameter and did partial
+        revolve's to make these pieces. I wrapped my pieces around the y-axis so in my design my pieces are the radis of hoop away from the origin. Here a couple of Sketch photos
+
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-4">
+                    <img src="photos-cads-codes/sketch-for-iiner-flat.png"450" height="600">
+                    <p>
+                    The 228.5 represents the hoop radius and it's the distance beetween inside the hop. I first create a circle with 14.6mm diamater then offset it by 3mmm.
+                    However MPU uses 3M bolts so I modified the upper part to be 6mm away so that I can place M3 bolts and leave 1.5mm from both sides. I wanted the inner side to flat-ish
+                    (it won't be flat due to revolve) so that the MPU can easily fit in there. I made a 6° revolve for my piece.
+                    </p>
+                </div>
+                <div class="col-4">
+                    <img src="photos-cads-codes/sketch-for-iiner-flat.png" width="450" height="600">
+                    <p>
+                        Because of the revolve the inner side is curved and a flat syrface is needed to place the MPU. To make this I tried to sketch a rectangle that matched the height and the width
+                        of the inner part and extrude 1mm towards inner part of hoop and joine dwith the piece. This allowed me easily make holes for the M3 bolts and cut through the 2 bodies
+                    </p>
+                </div>
+                <div class="col-4">
+                    <img src="photos-cads-codes/sketrch-outer-MPUA.png" width="450" height="600">
+                    <p>
+                        Here's the design for the pieces that's on the outer part of the rim. I again this a 3mm offset then extended the top for 3mm so that I can put M3 bolts.
+                        These bolts also hold 2 pieces togetehr
+                    </p>
+                </div>
+            </div><!--End of row here-->
+        </div>
+
+        The distance beetween the holes for the M3 bolts had to match that of the MPU so that I could tightly attach MPU in. Altough I had found the CAD of the MPU online 
+        I wanted to be sure that I got the distance beetween 2MPU's right. So I cade-ed a rectangle with 2 holes that are 12.5mm apart by the closest point. Then I extruded it for 3mm
+        and tested with an actual MPU(it obviously worked) then I cut these holes from the CAD design's and printed of 2 of each pieces(outer and inner).
+        <br>
+        I had a similar design for LISD3H as well but it had holes for M2.5 bolts and the M2.5 were'nt enough to attach the LIS3Dh to the piece and also connect 2 pieces,
+        so for the pieces for I drilled 8 holes, 4 M2.5 to attach the LIS3DH and 4 M3 bolts to connect the inner and outer pieces. Here the CAD-design for LISD3H attachment.
+
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-4">
+                    <img src="photos-cads-codes/sketch-LISD3H-inner.png" witdh="450" height="600">
+                    <p>
+                        Here's the sketch for the inner LIS3DH part. Like MPU I extrude a rectangle 1mm to make flat surface. To have space for both M2.5's and M3's I did a 8° revolve.
+
+                    </p>
+                </div>
+                <div class="col-4">
+                    <img src="photos-cads-codes/sketch-LISD3H-inner.png" width="450" height="600">
+                    <p>
+                        Here's the sketch for the outer LISD3H attachment.
+                    </p>
+                </div>
+                <div class="col-4">
+                    <img src="photos-cads-codes/sketch-LIS3Dh-holes.png" width="450" height="600">
+                    <p>
+                        Here's the sketch for the holes on the flat face. The distance beetween the 2.5 holes has been tested by a test piece.
+                        Also I wanted M3 holes to be 1.5mm from both sides that's why you see 2.12mm and 45°.
+                    </p>
+                </div>
+            </div><!--End of row here-->
+        </div>
+
+        <p>
+            While placing the MPU, there were 2 holes on the upper side but none on the lover side. Also the pins stuck a little out from
+            the bottom which made it tilted to fix these I used some spacer's which solved the problem. I didn't had the some problem with LIS3Dh as 
+            it had 4 placement holes. Here are some photos from putting them to the hoop.
+        </p>
+        
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-4">
+                    <img src="photos-cads-codes/LIS3DH-attachment-test-piece.jpg" witdh="450" height="600">
+                    <p>
+                        Here's the sketch for the inner LIS3DH part. Like MPU I extrude a rectangle 1mm to make flat surface. To have space for both M2.5's and M3's I did a 8° revolve.
+
+                    </p>
+                </div>
+                <div class="col-4">
+                    <img src="photos-cads-codes/MPU-fully-attached.jpg" width="450" height="600">
+                    <p>
+                        Here's attachment of one of the MPU'S
+                    </p>
+                </div>
+                <div class="col-4">
+                    <img src="photos-cads-codes/all sensor's fully attached.jpg" width="450" height="600">
+                    <p>
+                        Here's a photo of all sensor's fully put. We raped some tape around them so they stayed in fix places and didn't move around
+                    </p>
+                </div>
+            </div><!--End of row here-->
+        </div>
+    </p>
+
+    <hr>
+        <h2 id="problems">Electronics and The Problems we ran into</h2>
+        <a class="in-page-link" href="#overall">Overall Design</a>
+        <a class="in-page-link" href="#cad-ing">Cad-ing</a>
+        <a class="in-page-link" href="#coding">Coding</a>
+        <a class="in-page-link" href="#improvements">Improvements</a>
+    <hr>
+    
+    <p>
+        I2C is easy and hard to use. If you have multiple I2C devices with different I2C devices you don't have to do anything fancy on your code. However
+        if you have multiple I2C devices with the same adress you simply can't use them. Luckliy MPU and LIS3DH comes with solutons. They have a special
+        that when given voltage changes the I2C adress by 1. so and I2C adress of 0x68 become s0c69(this is for MPU). However if you want to beyond
+        2 it's again a problem and there's isn't that easy fix for us. So we decided use 2 MPU2s 2 LISDH3's together which worked easily. Firstly I had to find 
+        the part in the example codes that decided the I2C adress, it was in the begin() functions for both of them so I've chnaged them did some test's and it worked.
+        For wiring wise to simplify to process, I put power,GND,SCL and SDA pins into one of them long places int he breadboard and attached the MPU's to these lines.
+        Here's an example sketch with 2 acceloremeters.
+
+        <img src="Electronics and Codes/example_of_thecurciut.png" width="450" height="600">
+
+        On Wednesday when I integrated the LED withe system I just put them pin4 and pin15(coding LED's was Demir's job so I won't mention it here).
+
+        <br>
+
+        When I was testing I qu,ickly realized that to get accurate readings from the sensor's we had to put them an the hoop and attach that hoop to a fixed place.
+        That take till the end of Tuesday and we started testing. During testing we quickly realized that a light touch from far away and a hard touch close by give
+        near-identical result's also, it near imposible whetahwr the ball touched left or right of the hoop and we could easily distinguish hits that were
+        really close to the hoop and really far away from the hoop. Because of this we had to scrap our original idea of finding 12 sections and decided to do the 
+        basic protype of detectşbg whetaher the ball hit close or far away. Also unlike our thoughts, the sensor'd gave warying results with how far they were away from the hoop.
+        Because 1 sensor data was enough our code works by just reading from 1 sensor. That's why I'm not including the code for reading 4 sensor and only putting the code for 
+        the far MPU we used to do our calculations.
+    </p>
+
+    <hr>
+        <h2 id="coding">Coding</h2>
+        <a class="in-page-link" href="#overall">Overall Design</a>
+        <a class="in-page-link" href="#cad-ing">Cad-ing</a>
+        <a class="in-page-link" href="#problems">Problems we Ran Into</a>
+        <a class="in-page-link" href="#improvements">Improvements</a>
+    <hr>
+
+    <p>
+        For the Code section I was responsible for detecting where the ball hit and Demir was responsible for writing me functions to set the LED's and a function
+        that light the led1 when the paramter is 1, light the led2 when the parameter is 2 and shut all LED's for any other parameter. He sended me the code file
+        however my computer refused to open it so I wrote my own near-identical code. Since I didn't do codinf for LED'S I'm not going to talk about.
+        <br>
+        After outing the accelormeter's into the backboard we hit different part's of the rim see how we were getting the data. The patern we saw was that
+        after a hit the rim shaked for a second we would get slowly diminishing wave's of data until it reaches it's regular values. At the start of the program 
+        ESP32 start's communication with MPU, then take's an average of 50 reading 15 micro-seconds aparts and decides that value it's regular value.
+        Then by the loop update() is called which take's reading and determines whetaher it was close hit, far hit, or not hit at all. If it's not a hit,
+        it read's data again in the next update() call if it's a hit, it reads sensor 3 more times(when a hit occurs far, the first 2 reading may be in the range of
+        close because the acceleration is still increasing) if there's at least 1 far reading it changes it's status to far, if not it's status is close(for light
+        close hits the status changes to no hit because the vibrations aren't that frequent). Then it doesn't read for 2 seconds then start's it's cycle again.
+        
+        in the loop after the update, the code get's it's tstaus and calls the LED light function accordingly(so basically the LED function is called constantly,
+        I could've wrote a code that called only when there was change on the status but I had so few of a time to not deal with it) The communication start with MPU and getting
+        readings from it are done by from copying the Adarfuit's basic-reading tutorial code int he arduino.
+        
+        In my code I have function that takes a reading and if the reading is in absolute 3.5 difference from the regular value, returns the standard value, and if it's 
+        out of that difference returns the actual value. Based on the value of this, a function returns the where the ball hit(if the valu is regular- no hit,
+        if the difference is less then 40-> close to the backboard, anything above is far). Also a function called get_state that rreturns the state instance variable to the loop function.
+
+    </p>
+    <pre  class="scrollable">
+        &nbsp;&nbsp;&nbsp;<font color="#00979c">String</font> <font color="#000000">give_state</font><font color="#000000">(</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">value</font><font color="#434f54">=</font><font color="#000000">get_if_abnormal</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">String</font> <font color="#000000">state</font><font color="#000000">;</font>
+       
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">dif</font><font color="#434f54">=</font><font color="#d35400">abs</font><font color="#000000">(</font><font color="#000000">value</font><font color="#434f54">-</font><font color="#000000">regular_val</font><font color="#000000">)</font><font color="#000000">;</font>
+       
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">dif</font><font color="#434f54">&lt;</font><font color="#000000">0.1</font><font color="#000000">)</font><font color="#434f54">&#47;&#47; doign abs vecauyse floating point imprecision</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">state</font><font color="#434f54">=</font><font color="#005c5f">&#34;no hit&#34;</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font> <font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">dif</font><font color="#434f54">&lt;</font> <font color="#000000">40</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">state</font><font color="#434f54">=</font><font color="#005c5f">&#34;close to the backboard&#34;</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">state</font><font color="#434f54">=</font><font color="#005c5f">&#34;far from backboard&#34;</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">return</font> <font color="#000000">state</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+     
+        &nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">get_reading</font><font color="#000000">(</font><font color="#000000">)</font><font color="#434f54">&#47;&#47;I got this from the example code</font>
+        &nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">sensors_event_t</font> <font color="#000000">a</font><font color="#434f54">,</font> <font color="#000000">g</font><font color="#434f54">,</font> <font color="#000000">temp</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">mpu</font><font color="#434f54">.</font><font color="#000000">getEvent</font><font color="#000000">(</font><font color="#434f54">&amp;</font><font color="#000000">a</font><font color="#434f54">,</font> <font color="#434f54">&amp;</font><font color="#000000">g</font><font color="#434f54">,</font> <font color="#434f54">&amp;</font><font color="#000000">temp</font><font color="#000000">)</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;<font color="#5e6d03">return</font> <font color="#000000">a</font><font color="#434f54">.</font><font color="#000000">acceleration</font><font color="#434f54">.</font><font color="#000000">x</font> <font color="#000000">;</font>
+        &nbsp;&nbsp;<font color="#000000">}</font>  
+     </pre>
+
+     <p>
+        The way my update function work's is that it start's as in a condition of "no hit". If it's in no-hit, it get's the state
+        determines if it's a hit, it changes the variables to notify the program that now it's in a hit state. AFter these it updates millis.
+        If it's in a hit state the code checks if the time of last is less then 2 seconds or not if it^s more than 2 secon ds it goes back to no-hit state.
+        In the hit state it looks at how many reading it has if it's less than 4 it takes a readng and if the state variable is not far(it updates it's state
+        (if the state is already far it stays far, if the state is close to the board it reads again so that we don't miss a far shot.)
+     </p>
+
+     <pre class="scrollable">
+        &nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">void</font> <font color="#d35400">update</font><font color="#000000">(</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">long</font> <font color="#000000">cur_time</font><font color="#434f54">=</font><font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+        &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#434f54">!</font><font color="#000000">has_hit</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">String</font> <font color="#000000">stat</font><font color="#434f54">=</font><font color="#000000">give_state</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#434f54">!</font> <font color="#000000">stat</font><font color="#434f54">.</font><font color="#d35400">equals</font><font color="#000000">(</font><font color="#005c5f">&#34;no hit&#34;</font><font color="#000000">)</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">has_hit</font><font color="#434f54">=</font><font color="#00979c">true</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">cur_state</font><font color="#434f54">=</font><font color="#000000">stat</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">num_read</font><font color="#434f54">+=</font><font color="#000000">1</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">cur_state</font><font color="#434f54">=</font><font color="#000000">stat</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">last_no_hit</font><font color="#434f54">=</font><font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font> <font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">cur_time</font><font color="#434f54">-</font><font color="#000000">last_no_hit</font><font color="#434f54">&lt;</font><font color="#000000">2000</font><font color="#000000">)</font><font color="#434f54">&#47;&#47;during hit faze</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+       
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">num_read</font> <font color="#434f54">&lt;</font> <font color="#000000">num_read_for_far</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">num_read</font><font color="#434f54">+=</font><font color="#000000">1</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">cur_state</font><font color="#434f54">.</font><font color="#d35400">equals</font><font color="#000000">(</font><font color="#005c5f">&#34;close to the backboard&#34;</font><font color="#000000">)</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">cur_state</font><font color="#434f54">=</font><font color="#000000">give_state</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font> <font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">cur_time</font><font color="#434f54">-</font><font color="#000000">last_no_hit</font><font color="#434f54">&gt;</font><font color="#000000">2000</font><font color="#000000">)</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">has_hit</font><font color="#434f54">=</font><font color="#00979c">false</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">num_read</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+       </pre>
+
+       <p>
+        I have a function that takes average of 50 readings but it's just a basic for loop so I'm not putting it. Here's the constructor of the class. Also
+        I'm not putting the code for the communication's because it's too long and same as the Adafruit's example code.
+       </p>
+
+       <pre class="scrollable">
+        <font color="#00979c">class</font> <font color="#000000">MPU6050</font>
+        <font color="#000000">{</font>
+         &nbsp;&nbsp;<font color="#00979c">const</font> <font color="#00979c">static</font> <font color="#00979c">int</font> &nbsp;<font color="#000000">off_time</font><font color="#434f54">=</font><font color="#000000">2000</font><font color="#000000">;</font>
+         &nbsp;&nbsp;<font color="#00979c">const</font> <font color="#00979c">static</font> <font color="#00979c">int</font> <font color="#000000">num_read_for_far</font><font color="#434f54">=</font><font color="#000000">4</font><font color="#000000">;</font><font color="#434f54">&#47;&#47; the first couple might be close</font>
+         &nbsp;&nbsp;&nbsp;
+         &nbsp;<font color="#00979c">public</font><font color="#434f54">:</font>
+         &nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;<font color="#000000">Adafruit_MPU6050</font> <font color="#000000">mpu</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">overall_offset</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">uint8_t</font> <font color="#000000">I2C_adress</font><font color="#000000">;</font>
+        
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">regular_val</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">double</font> <font color="#000000">cut_off_limit</font><font color="#000000">;</font>
+        
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">long</font> <font color="#000000">last_no_hit</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">boolean</font> <font color="#000000">has_hit</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">num_read</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;<font color="#00979c">String</font> <font color="#000000">cur_state</font><font color="#000000">;</font>
+        
+         &nbsp;&nbsp;&nbsp;<font color="#000000">MPU6050</font><font color="#000000">(</font> <font color="#00979c">uint8_t</font> <font color="#000000">I2C</font><font color="#434f54">,</font> <font color="#00979c">double</font> <font color="#000000">off_lim</font><font color="#000000">)</font>
+         &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">I2C_adress</font><font color="#434f54">=</font><font color="#000000">I2C</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">cut_off_limit</font><font color="#434f54">=</font><font color="#000000">off_lim</font><font color="#000000">;</font>
+        
+         &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">regular_val</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+        
+         &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">last_no_hit</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">has_hit</font><font color="#434f54">=</font><font color="#00979c">false</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">num_read</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">cur_state</font><font color="#434f54">=</font><font color="#005c5f">&#34;no hit&#34;</font><font color="#000000">;</font>
+         &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+        
+        </pre>
+
+        <p>
+            In the set-up I set the mpu and LED up. on the Loop I upodate the MPU and get it's current state.
+            Convert the state into an integer and light the LED2s accordingly.
+        </p>
+
+        <pre class="scrollable">
+            <font color="#000000">MPU6050</font> <font color="#000000">mpu1</font><font color="#000000">(</font> <font color="#000000">0x68</font><font color="#434f54">,</font><font color="#000000">3.5</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#00979c">int</font> <font color="#000000">led1</font><font color="#434f54">=</font><font color="#000000">4</font><font color="#000000">;</font>
+            <font color="#00979c">int</font> <font color="#000000">led2</font><font color="#434f54">=</font><font color="#000000">15</font><font color="#000000">;</font>
+            
+            <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             <b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">115200</font><font color="#000000">)</font><font color="#000000">;</font> 
+            
+             &nbsp;&nbsp;<font color="#000000">set_leds</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#000000">mpu1</font><font color="#434f54">.</font><font color="#000000">set_MPU6050</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+            
+            
+             &nbsp;<font color="#000000">mpu1</font><font color="#434f54">.</font><font color="#d35400">update</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#00979c">String</font> <font color="#000000">stat</font><font color="#434f54">=</font><font color="#000000">mpu1</font><font color="#434f54">.</font><font color="#000000">get_state</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">stat</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#00979c">int</font> <font color="#000000">num</font><font color="#434f54">=</font><font color="#000000">input_to_led</font><font color="#000000">(</font><font color="#000000">stat</font><font color="#000000">)</font><font color="#000000">;</font>
+            
+             &nbsp;<font color="#000000">light_led</font><font color="#000000">(</font><font color="#000000">num</font><font color="#000000">)</font><font color="#000000">;</font>
+            
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">int</font> <font color="#000000">input_to_led</font><font color="#000000">(</font><font color="#00979c">String</font> <font color="#000000">s</font><font color="#000000">)</font>
+            <font color="#000000">{</font>
+             &nbsp;<font color="#00979c">int</font> <font color="#000000">val</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+             &nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">s</font><font color="#434f54">.</font><font color="#d35400">equals</font><font color="#000000">(</font><font color="#005c5f">&#34;no hit&#34;</font><font color="#000000">)</font><font color="#000000">)</font>
+             &nbsp;<font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">val</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+             &nbsp;<font color="#000000">}</font>
+             &nbsp;<font color="#5e6d03">else</font> <font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">s</font><font color="#434f54">.</font><font color="#d35400">equals</font><font color="#000000">(</font><font color="#005c5f">&#34;close to the backboard&#34;</font><font color="#000000">)</font><font color="#000000">)</font>
+             &nbsp;<font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">val</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font>
+             &nbsp;<font color="#000000">}</font>
+             &nbsp;<font color="#5e6d03">else</font>
+             &nbsp;<font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">val</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+             &nbsp;<font color="#000000">}</font>
+            
+             &nbsp;<font color="#5e6d03">return</font> <font color="#000000">val</font><font color="#000000">;</font> 
+            <font color="#000000">}</font>
+            </pre>
+
+    <hr>
+        <h2 id="improvements">İmprovement for Future Design</h2>
+        <a class="in-page-link" href="#overall">Overall Design</a>
+        <a class="in-page-link" href="#cad-ing">Cad-ing</a>
+        <a class="in-page-link" href="#problems">Problems we Ran Into</a>
+        <a class="in-page-link" href="#coding">Coding</a>
+    <hr>
+
+    <p>
+        There are many major and tiny improvement's we can make to the design. As a person who likes to write efficient,
+        modular, easy readible codes, I can say a lot of about nuances about my code but won't say it. The major problem we had 
+        is that acceloremeters are not suited for a thing we're doing. Instead of that we could've put 12 capacitive touch sensor around
+        the hoop and easily attach 12 LED's to it, it probably isn't as simple as light the LED for the sensor that's high, but simpler than dealing
+        with oscilations. Besides that if had just put accelormeter's in tested with the hoop way before we could've found our mistake and change
+        but because we found 1 day before Thursday it was too late.
+    </p>         
+
+</body>
+
+<script src="./strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+</html>
+
+
+<!--
+    https://adafruit.github.io/Adafruit_MPU6050/html/class_adafruit___m_p_u6050.html#af557280a5c05d15f089c82506179144d
+-->
